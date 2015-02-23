@@ -1,0 +1,262 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      8402,        253]
+NotebookOptionsPosition[      7602,        225]
+NotebookOutlinePosition[      7938,        240]
+CellTagsIndexPosition[      7895,        237]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ListImport", "=", 
+   RowBox[{"Import", "[", "\"\<InputList.mat\>\"", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626763348205548*^9, 3.626763411978037*^9}, {
+   3.626763465709757*^9, 3.62676348380281*^9}, 3.626763518692856*^9, 
+   3.626763596318807*^9, {3.62676368702488*^9, 3.626763692032408*^9}, 
+   3.626763759425013*^9, 3.631976416894557*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Dim", "=", 
+   RowBox[{"Dimensions", "[", "ListImport", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626763493836626*^9, 3.626763497743684*^9}, {
+   3.626763713915345*^9, 3.626763766488356*^9}, {3.626763808840948*^9, 
+   3.626763811080825*^9}, 3.631976418749448*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"IndexList", "=", 
+   RowBox[{"ArrayReshape", "[", 
+    RowBox[{"ListImport", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Part", "[", 
+        RowBox[{"Dim", ",", "2"}], "]"}], ",", 
+       RowBox[{"Part", "[", 
+        RowBox[{"Dim", ",", "3"}], "]"}]}], "}"}]}], "]"}]}], ";"}]], "Input",\
+
+ CellChangeTimes->{{3.626763566191178*^9, 3.626763569449039*^9}, {
+   3.62676364022803*^9, 3.626763695633453*^9}, {3.626763749600376*^9, 
+   3.626763780840315*^9}, {3.626763926297027*^9, 3.626763946186425*^9}, 
+   3.626764441784511*^9, {3.626769237414015*^9, 3.626769267063522*^9}, 
+   3.63197642109557*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Dim", "=", 
+   RowBox[{"Dimensions", "[", "IndexList", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626763962173189*^9, 3.626763970743607*^9}, 
+   3.631976423898726*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"W3j", "=", 
+   RowBox[{"Array", "[", 
+    RowBox[{"0.0", ",", 
+     RowBox[{"Part", "[", 
+      RowBox[{"Dim", ",", "1"}], "]"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626764049702689*^9, 3.626764057014652*^9}, {
+   3.626764125844691*^9, 3.626764159695433*^9}, 3.631976426133953*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"L", "[", 
+    RowBox[{"{", 
+     RowBox[{
+     "j1_", ",", "j2_", ",", "j3_", ",", "m1_", ",", "m2_", ",", "m3_"}], 
+     "}"}], "]"}], ":=", 
+   RowBox[{"N", "[", 
+    RowBox[{"ThreeJSymbol", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"j1", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j2", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j3", ",", "0"}], "}"}]}], "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626764167686977*^9, 3.626764169583663*^9}, {
+   3.626764227178314*^9, 3.626764291953044*^9}, {3.626764329944658*^9, 
+   3.626764333049474*^9}, {3.627283476002221*^9, 3.627283480201731*^9}, 
+   3.631976428746018*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"For", "[", 
+   RowBox[{
+    RowBox[{"k", "=", "1"}], ",", 
+    RowBox[{"k", "<=", 
+     RowBox[{"Part", "[", 
+      RowBox[{"Dim", ",", "1"}], "]"}]}], ",", 
+    RowBox[{"k", "++"}], ",", 
+    RowBox[{
+     RowBox[{"Part", "[", 
+      RowBox[{"W3j", ",", "k"}], "]"}], "=", 
+     RowBox[{"L", "[", 
+      RowBox[{"Part", "[", 
+       RowBox[{"IndexList", ",", "k"}], "]"}], "]"}]}]}], "]"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.626763995149627*^9, 3.626764041695908*^9}, {
+   3.626764173375839*^9, 3.626764222193857*^9}, 3.631976431080282*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{"\"\<WignerMathematica.mat\>\"", ",", "W3j"}], "]"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.626764354532449*^9, 3.626764374550378*^9}, 
+   3.631976433397378*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ListImport", "=", 
+   RowBox[{"Import", "[", "\"\<InputListPlus.mat\>\"", "]"}]}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.626763348205548*^9, 3.626763411978037*^9}, {
+   3.626763465709757*^9, 3.62676348380281*^9}, 3.626763518692856*^9, 
+   3.626763596318807*^9, {3.62676368702488*^9, 3.626763692032408*^9}, 
+   3.626763759425013*^9, {3.62728367556551*^9, 3.627283676243434*^9}, 
+   3.631976436916884*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Dim", "=", 
+   RowBox[{"Dimensions", "[", "ListImport", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626763493836626*^9, 3.626763497743684*^9}, {
+   3.626763713915345*^9, 3.626763766488356*^9}, {3.626763808840948*^9, 
+   3.626763811080825*^9}, 3.631976443611659*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"IndexList", "=", 
+   RowBox[{"ArrayReshape", "[", 
+    RowBox[{"ListImport", ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Part", "[", 
+        RowBox[{"Dim", ",", "2"}], "]"}], ",", 
+       RowBox[{"Part", "[", 
+        RowBox[{"Dim", ",", "3"}], "]"}]}], "}"}]}], "]"}]}], ";"}]], "Input",\
+
+ CellChangeTimes->{{3.626763566191178*^9, 3.626763569449039*^9}, {
+   3.62676364022803*^9, 3.626763695633453*^9}, {3.626763749600376*^9, 
+   3.626763780840315*^9}, {3.626763926297027*^9, 3.626763946186425*^9}, 
+   3.626764441784511*^9, {3.626769237414015*^9, 3.626769267063522*^9}, 
+   3.631976441151433*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Dim", "=", 
+   RowBox[{"Dimensions", "[", "IndexList", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626763962173189*^9, 3.626763970743607*^9}, 
+   3.63197644730884*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"W3j", "=", 
+   RowBox[{"Array", "[", 
+    RowBox[{"0.0", ",", 
+     RowBox[{"Part", "[", 
+      RowBox[{"Dim", ",", "1"}], "]"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626764049702689*^9, 3.626764057014652*^9}, {
+   3.626764125844691*^9, 3.626764159695433*^9}, 3.631976449077144*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"L", "[", 
+    RowBox[{"{", 
+     RowBox[{
+     "j1_", ",", "j2_", ",", "j3_", ",", "m1_", ",", "m2_", ",", "m3_"}], 
+     "}"}], "]"}], ":=", 
+   RowBox[{"N", "[", 
+    RowBox[{"ThreeJSymbol", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"j1", ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"j2", "+", "1"}], ",", "0"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j3", ",", "0"}], "}"}]}], "]"}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.626764167686977*^9, 3.626764169583663*^9}, {
+   3.626764227178314*^9, 3.626764291953044*^9}, {3.626764329944658*^9, 
+   3.626764333049474*^9}, {3.627283476002221*^9, 3.627283480201731*^9}, {
+   3.627283683950255*^9, 3.627283684008069*^9}, 3.631976451441887*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"For", "[", 
+   RowBox[{
+    RowBox[{"k", "=", "1"}], ",", 
+    RowBox[{"k", "<=", 
+     RowBox[{"Part", "[", 
+      RowBox[{"Dim", ",", "1"}], "]"}]}], ",", 
+    RowBox[{"k", "++"}], ",", 
+    RowBox[{
+     RowBox[{"Part", "[", 
+      RowBox[{"W3j", ",", "k"}], "]"}], "=", 
+     RowBox[{"L", "[", 
+      RowBox[{"Part", "[", 
+       RowBox[{"IndexList", ",", "k"}], "]"}], "]"}]}]}], "]"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.626763995149627*^9, 3.626764041695908*^9}, {
+   3.626764173375839*^9, 3.626764222193857*^9}, 3.631976453727027*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{"\"\<WignerPlusMathematica.mat\>\"", ",", "W3j"}], "]"}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.626764354532449*^9, 3.626764374550378*^9}, {
+   3.627283690911709*^9, 3.627283691621112*^9}, 3.631976455453358*^9}]
+},
+WindowSize->{931, 1028},
+WindowMargins->{{Automatic, -10}, {Automatic, -8}},
+FrontEndVersion->"10.0 for Linux x86 (32-bit) (June 27, 2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 386, 7, 32, "Input"],
+Cell[947, 29, 304, 6, 32, "Input"],
+Cell[1254, 37, 646, 16, 32, "Input"],
+Cell[1903, 55, 207, 5, 32, "Input"],
+Cell[2113, 62, 330, 8, 32, "Input"],
+Cell[2446, 72, 724, 20, 32, "Input"],
+Cell[3173, 94, 584, 17, 32, "Input"],
+Cell[3760, 113, 226, 6, 32, "Input"],
+Cell[3989, 121, 442, 9, 32, "Input"],
+Cell[4434, 132, 304, 6, 32, "Input"],
+Cell[4741, 140, 647, 16, 32, "Input"],
+Cell[5391, 158, 206, 5, 32, "Input"],
+Cell[5600, 165, 330, 8, 32, "Input"],
+Cell[5933, 175, 799, 21, 32, "Input"],
+Cell[6735, 198, 584, 17, 32, "Input"],
+Cell[7322, 217, 276, 6, 89, "Input"]
+}
+]
+*)
+
+(* End of internal cache information *)

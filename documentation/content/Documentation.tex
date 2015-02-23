@@ -1,0 +1,162 @@
+\section{Structure of the program}
+The program run consists of the step initialization, assembling, eigenvalue computation and postprocessing.
+The initialization consists of the routines
+\begin{compactitem}
+	\item \texttt{initializeDiscretization}, which extends the \texttt{params} structure,
+	\item \texttt{initializeVelocity}, which extends the \texttt{velocity} structure.
+\end{compactitem}
+The number of modes is $\texttt{n}_\texttt{modes}=\left(\texttt{nmax}+1\right)^2\,.$ The assembly of the 
+matrices consists of the routines
+\begin{compactitem}
+	\item \texttt{assembleCouplingMatrix}, which consists of the routines
+		\begin{compactitem}
+			\item \texttt{getPatternMatrix} which computes the \textsc{Wigner}-$3j$-Symbols i.e. the 
+			structure \texttt{GeoIntegrals},
+			\item \texttt{assembleM} assembles the coupling matrix for toroidal modes 
+			$\mathbb{C}^{\left(\texttt{n}_\texttt{modes}\texttt{nr}\right)\times
+			\left(\texttt{n}_\texttt{modes}\texttt{nr}\right)}$,
+			\item \texttt{assembleN} assembles the coupling matrix for poloidal modes
+			$\mathbb{C}^{\left(\texttt{n}_\texttt{modes}\left(\texttt{nr}+1\right)\right)\times
+						\left(\texttt{n}_\texttt{modes}\left(\texttt{nr}+1\right)\right)}$,
+		\end{compactitem}
+	\item \texttt{assembleBesselOperator}, which is rather simple 
+	$\mathbb{R}^{\left(\texttt{n}_\texttt{modes}\left(2\texttt{nr}+1\right)\right)\times
+							\left(\texttt{n}_\texttt{modes}\left(2\texttt{nr}+1\right)\right)}$,
+	\item \texttt{assembleRSquaredMatrix}, which is very simple just a diagonal matrix 
+	$\mathbb{R}^{\left(\texttt{n}_\texttt{modes}\left(2\texttt{nr}+1\right)\right)\times
+							\left(\texttt{n}_\texttt{modes}\left(2\texttt{nr}+1\right)\right)}$.
+\end{compactitem}
+The matrix dimension given above indicate that there are two different grids, one for the toroidal modes and 
+one for the toroidal modes. The toroidal modes are computed on an \emph{reduced} grid consisting of the 
+internal points only. The poloidal modes are computed on an \emph{extended} grid consisting of the internal 
+points and the right-hand side boundary point. The eigenvalue computation is performed using the 
+\texttt{eigs}-routine, which is a modified \textsc{Arnoldi} method.
+\section{Variables}
+lists of variables including short descriptions are given below.
+\subsection{The structure \texttt{params}}
+The structure \texttt{params} contains information related to the discretization and finite differences 
+schemes.
+\begin{center}
+\begin{tabularx}{\textwidth}{rXl}
+	variable & description & typ/size\\\hline
+	\texttt{diffMethod} & finite difference stencil specification & \texttt{string}\\
+	\texttt{nmax} & number of modes & $\mathbb{R}$\\
+	\texttt{nr} & number of interior points & $\mathbb{R}$\\
+	\texttt{h} & grid spacing & $\mathbb{R}$\\	
+	\texttt{rhm} & number of interior points, the reduced grid & $\mathbb{R}^\texttt{nr}$\\
+	\texttt{rhn} & number of interior points and right-hand boundary point, the extended grid & 
+	$\mathbb{R}^{\texttt{nr}+1}$\\
+	\texttt{Rhm} & sparse diagonal matrix with \texttt{rhm} as diagonal entries & 
+															$\mathbb{R}^{\texttt{nr}\times\texttt{nr}}$\\
+	\texttt{Rhn} & sparse diagonal matrix with \texttt{rhn} as diagonal entries &
+								 $\mathbb{R}^{\left(\texttt{nr}+1\right)\times\left(\texttt{nr}+1\right)}$\\
+	\texttt{D1m} & sparse FD matrix of 1st derivative on reduced grid &
+															$\mathbb{R}^{\texttt{nr}\times\texttt{nr}}$\\
+	\texttt{D2m} & sparse FD matrix of 2nd derivative on reduced grid & 
+															$\mathbb{R}^{\texttt{nr}\times\texttt{nr}}$\\
+	\texttt{D1n} & function handle to get FD Matrix of 1st derivative of poloidal field. The function handle
+	has to be called with inputs \texttt{j} according to $n^i_j$ and \texttt{gridType} to specify if result 
+	is computed on extended grid or not. & \texttt{function handle}\\
+	\texttt{D2n} & function handle to get FD Matrix of 2nd derivative of poloidal field. Same holds for 
+	inputs as above.  & \texttt{function handle}\\
+	\texttt{D1hm} & Same as \texttt{D1m}. & $\mathbb{R}^{\texttt{nr}\times\texttt{nr}}$\\
+	\texttt{D2hm} & Same as \texttt{D2m}. & $\mathbb{R}^{\texttt{nr}\times\texttt{nr}}$\\
+	\texttt{D1hn} & sparse FD matrix of 1st derivative on extended grid. This matrix is only applied to 
+	velocity fields, which satisfy homogeneous \textsc{Dirichlet} boundary conditions.  & 
+								$\mathbb{R}^{\left(\texttt{nr}+1\right)\times\left(\texttt{nr}+1\right)}$\\
+	\texttt{D2hn} & sparse FD matrix of 2nd derivative on extended grid. Same as above. & 
+								$\mathbb{R}^{\left(\texttt{nr}+1\right)\times\left(\texttt{nr}+1\right)}$
+\end{tabularx}
+\end{center}
+\subsection{The structure \texttt{velocity}}
+The structure \texttt{velocity} contains information related to the velocity field. The main of the structure is returned by the routine \texttt{velocity}. The structures \texttt{params} and 
+\texttt{velocity.referenceCase} 
+need to be specified prior executing \texttt{getPatternMatrix}.
+\begin{center}
+\begin{tabularx}{\textwidth}{rXl}
+	variable & description & typ/size\\\hline
+	\texttt{KField} & $K$ integral values and indices stored row-wise in a field. The first three contain the columns contains the index information. The fourth column contains the $K$ integral value. Hence
+	\begin{equation*}
+		\texttt{KField(x,:)}=
+		\begin{bmatrix}
+			m/n & i/j & k/l & K^{ikm}_{jln}
+		\end{bmatrix}\in\mathbb{R}^{1\times4}\,.
+	\end{equation*}
+	whereas linear indexing is used for index pairs such as $m/n$.
+  & $\mathbb{R}^{\texttt{?}\times\texttt{4}}$\\
+	\texttt{LField} & $L$ integral values and indices stored row-wise in a field. Same as above. & 
+	$\mathbb{R}^{\texttt{?}\times\texttt{4}}$
+\end{tabularx}
+\end{center}
+\subsection{The structure \texttt{GeoIntegrals}}
+The structure \texttt{GeoIntegrals} contains information related to the integrals~$K$ and $L$. The structure 
+is returned by the routine \texttt{getPatternMatrix}. The structures \texttt{params} and \texttt{velocity} 
+need to be specified prior executing \texttt{getPatternMatrix}.
+\begin{center}
+\begin{tabularx}{\textwidth}{rXl}
+	variable & description & typ/size\\\hline
+	\texttt{KField} & $K$ integral values and indices stored row-wise in a field. The first three contain the columns contains the index information. The fourth column contains the $K$ integral value. Hence
+	\begin{equation*}
+		\texttt{KField(x,:)}=
+		\begin{bmatrix}
+			m/n & i/j & k/l & K^{ikm}_{jln}
+		\end{bmatrix}\in\mathbb{R}^{1\times4}\,.
+	\end{equation*}
+	whereas linear indexing is used for index pairs such as $m/n$.
+  & $\mathbb{R}^{\texttt{?}\times\texttt{4}}$\\
+	\texttt{LField} & $L$ integral values and indices stored row-wise in a field. Same as above. & 
+	$\mathbb{R}^{\texttt{?}\times\texttt{4}}$
+\end{tabularx}
+\end{center}
+
+\section{Verification of the Couplingmatrix Assembly}
+We choose the velocity field
+\begin{equation}
+	\bm{v}=\nabla\times\left(r\left(r^2\left(1-r^2\right)\right)
+	\alegend[\co{\theta}]{1}{0}\er\right)\,,
+\end{equation}
+whereas $\texttt{nmax}=1$ und $\texttt{nr}=3$. Hence,
+\begin{equation}
+	f\left(r\right)=r^2\left(1-r^2\right)\,.
+\end{equation}
+\section{Implemented Form of Bullard Gellman Equations}
+Starting from
+\begin{equation}
+	\lambda\bm{B}=\Remag\nabla\times\left(\bm{v}\times\bm{B}\right)-\nabla\times\nabla\times\bm{B}
+	\DOperator[r]{2}{m^i_j}
+\end{equation}
+using projection methods we arrive at
+\begin{subequations}
+\begin{align}
+	\lambda j\left(j+1\right)m^i_j\left(r\right)&=j\left(j+1\right)\left(
+	\DOperator[r]{2}{m^i_j}- j\left(j+1\right)\frac{m^i_j\left(r\right)}{r^2}	\right)+\Remag\cdots\,.\\
+	\lambda j^2\left(j+1\right)^2\frac{n^i_j\left(r\right)}{r^2}&=j^2\left(j+1\right)^2\frac{1}{r^2}\left(
+	\DOperator[r]{2}{n^i_j}-j\left(j+1\right)\frac{n^i_j\left(r\right)}{r^2}\right)+\Remag\cdots\,.
+\end{align}
+\end{subequations}
+Multiplying the first equation above $r^2$ and dividing by $j\left(j+1\right)$ leads to
+\begin{subequations}
+\begin{equation}
+	\lambda r^2 m^i_j\left(r\right)=r^2\DOperator[r]{2}{m^i_j}
+	-j\left(j+1\right)\frac{m^i_j\left(r\right)}{r^2}+\frac{\Remag}{j\left(j+1\right)}r^2\cdots\,.
+\end{equation}
+For the second equation after multiplication by $r^4$ and division by $j^2\left(j+1\right)^2$ we obtain
+\begin{equation}
+	\lambda r^2 n^i_j\left(r\right)=r^2\DOperator[r]{2}{n^i_j}
+	-j\left(j+1\right)n^i_j\left(r\right)+\frac{\Remag}{j^2\left(j+1\right)^2}r^4\cdots\,.
+\end{equation}
+\end{subequations}
+For radial differential operator it holds
+\begin{equation}
+	r^2\DOperator[r]{2}{f}
+	=r\ddsqr{}{r}\left(rf\left(r\right)\right)=r^2f''\left(r\right)+2rf'\left(r\right)\,.
+\end{equation}
+Hence, the implemented equations are of the form
+\begin{subequations}
+\begin{align}
+	\lambda r^2 m^i_j\left(r\right)&=r^2\ddsqr{m^i_j}{r}+2r\dd{m^i_j}{r}
+	- j\left(j+1\right)m^i_j\left(r\right)+\frac{\Remag}{j\left(j+1\right)}r^2\cdots\,.\\
+	\lambda r^2 n^i_j\left(r\right)&=r^2\ddsqr{n^i_j}{r}+2r\dd{n^i_j}{r}
+	-j\left(j+1\right)n^i_j\left(r\right)+\frac{\Remag}{j^2\left(j+1\right)^2}r^4\cdots\,.
+\end{align}
+\end{subequations}

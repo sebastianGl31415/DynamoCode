@@ -1,0 +1,446 @@
+%------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+%--- Titel:    ...                                                          ---%
+%--- Autor:    ...                                                          ---%
+%--- Vorlage:  Dipl.-Ing. Timo Pe <timo.pe@tu-harburg.de>                   ---%
+%---           Institut für Flugzeug-Systemtechnik                          ---%
+%---           Neßpriel 5, 21129 Hamburg                                    ---%
+%---           http://www.fst.tu-harburg.de/                                ---%
+%------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% Hier werden die Kommandos initialisiert, die im Dokument mehrfach benötigt
+% werden. Da sie eher dokumentenspezifisch sind, befinden sie sich nicht in
+% der Präambel.
+
+%------------------------------------------------------------------------------%
+%---- Farbdefinition ----------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+\definecolor{backgroundgrey}{gray}{0.5}
+\definecolor{lightgray}{gray}{0.5}
+\definecolor{mediangray}{gray}{0.3125}
+\definecolor{stronggray}{gray}{0.25}
+
+\definecolor{box}{gray}{0.5}
+\definecolor{keywords}{RGB}{0,0,255}
+\definecolor{comments}{gray}{0.5}
+\definecolor{strings}{RGB}{160,32,240}
+
+
+%------------------------------------------------------------------------------%
+%---- Abkürzungen/Kurzschreibweisen -------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% Abkürzungen: kleinerer Abstand zwischen den Buchstaben, der zudem nicht
+% umbrochen werden kann
+\newcommand*\zB{z.\,B.\xspace}
+\newcommand*\dah{d.\,h.\xspace} % Achtung \dh ist leider schon vergeben!
+\newcommand*\ua{u.\,a.\xspace}
+\newcommand*\uU{u.\,U.\xspace}
+\newcommand*\idR{i.\,d.\,R.\xspace}
+\newcommand*\iA{i.\,A.\xspace}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Typografisches, Text ----------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \textsubscript
+% Funktion: Tiefgestelltes Zeichen im Text (Pendant zu \textsuperscript)
+% Hinweise: Die KOMA-Script-Klassen definieren dieses Kommando bereits,
+%           daher unnötig bei Verwendung dieser Klassen
+% Gebrauch: \textsubscript{}
+% Optionen: -
+% vor/nach: -
+% Referenz: DE-TeX-FAQ, Abschnitt 8.5.17, http://www.dante.de/faq/de-tex-faq/
+% \makeatletter
+% \DeclareRobustCommand*\textsubscript[1]{%
+%  \@textsubscript{\selectfont#1}}
+% \newcommand{\@textsubscript}[1]{%
+%  {\m@th\ensuremath{_{\mbox{\fontsize\sf@size\z@#1}}}}}
+% \makeatother
+
+
+% >> \dequote \frquote \enquote
+% Funktion: deutsche/französische/englische Anführungszeichen
+% Hinweise: -
+% Gebrauch: \dequote{...} \frquote{...} \enquote{...}
+% Optionen: -
+% vor/nach: -
+% Referenz: $groups$/de.comp.text.tex/browse_thread/thread/283337509f97cd3f
+\newcommand{\dequote}[1]{\glqq#1\grqq}
+\newcommand{\frquote}[1]{\guillemotright#1\guillemotleft} % fontenc-Paket
+%\newcommand{\enquote}[1]{\textquotedblleft#1\textquotedblright}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Listings / frames -------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+%\lstset{
+%	language=Python,
+%	numberbychapter=true,
+%	captionpos=t,
+%	basicstyle=\footnotesize\ttfamily,	% Standardschrift
+%	numberstyle=\tiny,					% Stil der Zeilennummern
+%	numbers=left,
+%	stepnumber=1,						% Abstand zwischen den Zeilennummern
+%	numbersep=5pt,						% Abstand der Nummern zum Text
+%	tabsize=2,							% Groesse von Tabs
+%	extendedchars=true,         			%
+%	breaklines=true,            			% Zeilen werden Umgebrochen
+%	keywordstyle=\color{keywords},
+%    	commentstyle=\color{comments},
+%	stringstyle=\color{strings},
+%    	frame=none,
+%	title=\lstname,
+%	showspaces=false,           % Leerzeichen anzeigen
+%	showtabs=false,             % Tabs anzeigen
+%	linewidth=\textwidth,
+%	xleftmargin=\bigskipamount,
+%	showstringspaces=false      % Leerzeichen in Strings anzeigen ?
+% }
+%\renewcommand{\lstlistingname}{\textsc{FEniCS}-Programm}
+%\renewcommand{\lstlistlistingname}{Verzeichnis der \textsc{FEniCS}-Programme}
+%\DeclareCaptionFormat{listingbox}{\colorbox{box}{\parbox{\textwidth}{\quad #1#2#3}}}
+%\DeclareCaptionFont{listingtitle}{\color{white}\sffamily\textbf}
+%\DeclareCaptionFont{listingname}{\color{white}}
+%\captionsetup[lstlisting]{
+%	format=listingbox,
+%	labelfont=listingtitle,
+%	singlelinecheck=true,
+%	font=listingname
+%	}
+%
+
+%------------------------------------------------------------------------------%
+%---- Frames ------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+
+% >> literaturempfehlung
+% Funktion: Hervorhebung für Literaturempfehlungen
+% Hinweise: basiert auf mdframed-Paket
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/mdframed/mdframed.pdf
+%\newenvironment{literaturempfehlung}[1][Literaturempfehlung]%
+%{%
+%	\begin{minipage}{\linewidth}% verhindert Seitenumbruch
+%	\setlength{\parskip}{5pt plus2pt}% Abstände zwischen Absätzen
+%	\vspace{2pt}%
+%	\hspace{1em}\textbf{#1}\smallskip
+%    % mdframed-Paket: umrahmte Boxen
+%	\begin{mdframed}[innerlinewidth=2pt, linecolor=lightgray, bottomline=false, rightline=false, skipbelow=4pt]%
+%}%
+%{%
+%    \end{mdframed}\end{minipage}%
+%}%
+
+\newtheorem{problem}{Problem}
+%------------------------------------------------------------------------------%
+%---- Quellenangaben ----------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% \autoref{[equationlabel]} ergibt z.B.: "Gleichung 2.4"
+% Zahl soll aber in Klammern stehen "Gleichung (2.4)":
+\newcommand{\eqnautoref}[1]{%
+\hyperref[#1]{\equationautorefname{}~(\ref*{#1})}%
+}%
+
+% Flexiblere Links auf Gleichungen:
+% [#1]: Beliebiger Text z.B. "Bedingung", wenn nicht verwendet wird nur die
+%       Gleichungsnummer in Klammern verlinkt
+% #2: equationlabel
+%
+\newcommand{\eqnref}[2][]{%
+\hyperref[#2]{#1 (\ref*{#2})}%
+}%
+
+% \autoref{[appendix_section]} ergibt z.B.: "Abschnitt A.1", soll aber
+% "Anhang A.1" ergeben. Geht scheinbar nur manuell über selbstdefiniertes
+% Kommando:
+\newcommand{\apxautoref}[1]{%
+\hyperref[#1]{\appendixautorefname{} \ref*{#1}}%
+}%
+
+
+
+
+%------------------------------------------------------------------------------%
+%---- Beschreibungen/Erläuterungen mit Überschriftszeile ----------------------%
+%------------------------------------------------------------------------------%
+
+% Umgebung für Erläuterungen/Beschreibungen etc.
+
+% Syntax-Beispiel:
+% \begin{itemheadline} % siehe macros.tex
+%   \headline{rot:}
+%     Die Farbe der Liebe
+%   \headline[\bfseries]{grün:}
+%     Die Farbe der Hoffnung
+% \end{itemheadline}
+
+\newenvironment{itemheadline}%
+{%
+    \bgroup%
+    %\setdefaultleftmargin{5.0ex}{2.5ex}{2.5ex}{2.5ex}{2.5ex}{2.5ex}%
+    \setlength{\plparsep}{0.8ex}%
+    \setlength{\plitemsep}{1.2ex}%
+    \setlength{\labelsep}{\labelsep+0.4ex}% calc-Paket
+    \begin{compactitem}%
+}%
+{%
+    \end{compactitem}%
+    \egroup%
+}%
+
+% nummerierte Beschreibung
+% Die "label" (= Zahlen) sind etwas breiter als der "bullet", zum optischen
+% Ausgleich wird der Abstand des labels vom item im Vergleich zur Auflistung
+% erniedrigt
+
+% [#1]: Label, z.B. "1." oder "A)" oder "I.)" etc.
+
+% Syntax-Beispiel:
+% \begin{enumheadline}[a)] % siehe macros.tex
+%   \headline{rot:}
+%     Die Farbe der Liebe
+%   \headline[\bfseries]{grün:}
+%     Die Farbe der Hoffnung
+% \end{enumheadline}
+
+\newenvironment{enumheadline}[1][1.]%
+{%
+    \bgroup%
+    %\setdefaultleftmargin{5.0ex}{2.5ex}{2.5ex}{2.5ex}{2.5ex}{2.5ex}%
+    \setlength{\plparsep}{0.8ex}%
+    \setlength{\plitemsep}{1.2ex}%
+    \begin{compactenum}[#1]%
+}%
+{%
+    \end{compactenum}%
+    \egroup%
+}%
+
+% headline
+% \par erzeugt einen neuen Absatz, \nopagebreak verhindert, dass der Name der
+% Teilfunktion von der Erklärung durch einen Seitenumbruch getrennt werden.
+% #1: Schrifteinstellungen
+% #2: Text
+\newcommand{\headline}[2][\itshape]{%
+    \item {#1#2}\par\nopagebreak%
+}%
+
+
+%------------------------------------------------------------------------------%
+%---- Mathematische Makros ----------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+\newcommand{\p}{\partial}
+\newcommand{\dd}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\ddsqr}[2]{\frac{\mathrm{d}^2 #1}{\mathrm{d} #2^2}}
+\newcommand{\pd}[2]{\frac{\p #1}{\p #2}}
+\newcommand{\ppd}[3]{\frac{\p^2 #1}{\p #2\p #3}}
+\newcommand{\pppd}[4]{\frac{\p^3 #1}{\p #2\p #3\p #4}}
+\newcommand{\pdsqr}[2]{\frac{\p^2 #1}{\p #2^2}}
+\newcommand{\pdsqrr}[3]{\frac{\p^2 #1}{\p #2 \p #3}}
+%------------------------------------------------------------------------------%
+\newcommand{\z}[1]{\ensuremath{\stackrel[(z)]{}{#1}}\!\vphantom{#1}}
+\newcommand{\x}[1]{\ensuremath{\stackrel[(x)]{}{#1}}\!\vphantom{#1}}
+\newcommand{\phy}[1]{\ensuremath{{\left\langle #1 \right\rangle}}}
+\newcommand{\christ}[2]{\ensuremath{\mathit{\Gamma}^{#1}_{#2}}}
+%------------------------------------------------------------------------------%
+\newcommand{\jump}[1]{\ensuremath{\left[\!\left[#1\right]\!\right]}}
+%------------------------------------------------------------------------------%
+\newcommand{\psiV}{\ensuremath{\stackrel[V]{}{\psi}\!\vphantom{\psi}}}
+\newcommand{\psiA}{\ensuremath{\stackrel[A]{}{\psi}\!\vphantom{\psi}}}
+\newcommand{\psiL}{\ensuremath{\stackrel[L]{}{\psi}\!\vphantom{\psi}}}
+\newcommand{\bmphiV}{\ensuremath{\stackrel[V]{}{\bm{\psi}}\!\vphantom{\bm{\psi}}}}
+\newcommand{\bmpsiA}{\ensuremath{\stackrel[A]{}{\bm{\psi}}\!\vphantom{\bm{\psi}}}}
+\newcommand{\bmpsiL}{\ensuremath{\stackrel[L]{}{\bm{\psi}}\!\vphantom{\bm{\psi}}}}
+\newcommand{\phiA}{\ensuremath{\stackrel[A]{}{\phi}\!\vphantom{\phi}}}
+\newcommand{\phiL}{\ensuremath{\stackrel[L]{}{\phi}\!\vphantom{\phi}}}
+\newcommand{\bmphiA}{\ensuremath{\stackrel[A]{}{\bm{\phi}}\!\vphantom{\bm{\phi}}}}
+\newcommand{\bmphiL}{\ensuremath{\stackrel[L]{}{\bm{\phi}}\!\vphantom{\bm{\phi}}}}
+\newcommand{\pV}{\ensuremath{\stackrel[V]{}{p}\!\vphantom{p}}}
+\newcommand{\pA}{\ensuremath{\stackrel[A]{}{p}\!\vphantom{p}}}
+\newcommand{\pL}{\ensuremath{\stackrel[L]{}{p}\!\vphantom{p}}}
+\newcommand{\bmpV}{\ensuremath{\stackrel[V]{}{\bm{p}}\!\vphantom{\bm{p}}}}
+\newcommand{\bmpA}{\ensuremath{\stackrel[A]{}{\bm{p}}\!\vphantom{\bm{p}}}}
+\newcommand{\bmpL}{\ensuremath{\stackrel[L]{}{\bm{p}}\!\vphantom{\bm{p}}}}
+\newcommand{\sV}{\ensuremath{\stackrel[V]{}{s}\!\vphantom{s}}}
+\newcommand{\sA}{\ensuremath{\stackrel[A]{}{s}\!\vphantom{s}}}
+\newcommand{\sL}{\ensuremath{\stackrel[L]{}{s}\!\vphantom{s}}}
+\newcommand{\bmsV}{\ensuremath{\stackrel[V]{}{\bm{s}}\!\vphantom{\bm{s}}}}
+\newcommand{\bmsA}{\ensuremath{\stackrel[A]{}{\bm{s}}\!\vphantom{\bm{s}}}}
+\newcommand{\bmsL}{\ensuremath{\stackrel[L]{}{\bm{s}}\!\vphantom{\bm{s}}}}
+%------------------------------------------------------------------------------%
+\newcommand{\Dfrak}{\ensuremath{\mathfrak{D}}}
+\newcommand{\bmDfrak}{\ensuremath{\bm{\mathfrak{D}}}}
+\newcommand{\efrak}{\ensuremath{\mathfrak{e}}}
+\newcommand{\bmefrak}{\ensuremath{\bm{\mathfrak{e}}}}
+\newcommand{\Efrak}{\ensuremath{\mathfrak{E}}}
+\newcommand{\bmEfrak}{\ensuremath{\bm{\mathfrak{E}}}}
+\newcommand{\Hfrak}{\ensuremath{\mathfrak{H}}}
+\newcommand{\bmHfrak}{\ensuremath{\bm{\mathfrak{H}}}}
+%------------------------------------------------------------------------------%
+\newcommand{\qL}{\ensuremath{\stackrel[L]{}{q}\!\vphantom{q}}}
+\newcommand{\qA}{\ensuremath{\stackrel[A]{}{q}\!\vphantom{q}}}
+\newcommand{\qV}{\ensuremath{\stackrel[V]{}{q}\!\vphantom{q}}}
+%------------------------------------------------------------------------------%
+\newcommand{\qf}{\ensuremath{q^\text{f}}}
+\newcommand{\qfL}{\ensuremath{\stackrel[L]{}{q}^\text{f}\!\vphantom{\qf}}}
+\newcommand{\qfA}{\ensuremath{\stackrel[A]{}{q}^\text{f}\!\vphantom{\qf}}}
+\newcommand{\qfV}{\ensuremath{\stackrel[V]{}{q}^\text{f}\!\vphantom{\qf}}}
+%------------------------------------------------------------------------------%
+\newcommand{\qp}{\ensuremath{q^\text{p}}}
+\newcommand{\qpL}{\ensuremath{\stackrel[L]{}{q}^\text{p}\!\vphantom{\qp}}}
+\newcommand{\qpA}{\ensuremath{\stackrel[A]{}{q}^\text{p}\!\vphantom{\qp}}}
+\newcommand{\qpV}{\ensuremath{\stackrel[V]{}{q}^\text{p}\!\vphantom{\qp}}}
+%------------------------------------------------------------------------------%
+\newcommand{\jf}{\ensuremath{j^\text{f}}}
+\newcommand{\jfA}{\ensuremath{\stackrel[A]{}{j}^\text{f}\!\vphantom{\jf}}}
+\newcommand{\jfL}{\ensuremath{\stackrel[L]{}{j}^\text{f}\!\vphantom{\jf}}}
+\newcommand{\bmjf}{\ensuremath{\bm{j}^\text{f}}}
+\newcommand{\bmjfL}{\ensuremath{\stackrel[L]{}{\bmj}^\text{f}\!\vphantom{\bmjf}}}
+\newcommand{\bmjfA}{\ensuremath{\stackrel[A]{}{\bmj}^\text{f}\!\vphantom{\bmjf}}}
+%------------------------------------------------------------------------------%
+\newcommand{\jp}{\ensuremath{j^\text{p}}}
+\newcommand{\jpL}{\ensuremath{\stackrel[L]{}{j}^\text{p}\!\vphantom{\jp}}}
+\newcommand{\jpA}{\ensuremath{\stackrel[A]{}{j}^\text{p}\!\vphantom{\jp}}}
+\newcommand{\bmjp}{\ensuremath{\bm{j}^\text{p}}}
+\newcommand{\bmjpL}{\ensuremath{\stackrel[L]{}{\bmj}^\text{p}\!\vphantom{\bmjp}}}
+\newcommand{\bmjpA}{\ensuremath{\stackrel[A]{}{\bmj}^\text{p}\!\vphantom{\bmjp}}}
+%------------------------------------------------------------------------------%
+\newcommand{\bmj}{\ensuremath{\bm{j}}}
+\newcommand{\bmjL}{\ensuremath{\stackrel[L]{}{\bmj}\!\vphantom{\bmj}}}
+\newcommand{\bmjA}{\ensuremath{\stackrel[A]{}{\bmj}\!\vphantom{\bmj}}}
+%------------------------------------------------------------------------------%
+\newcommand{\Bref}{\ensuremath{B_\bez}}
+\newcommand{\Eref}{\ensuremath{E_\bez}}
+\newcommand{\lref}{\ensuremath{l_\bez}}
+\newcommand{\tref}{\ensuremath{t_\bez}}
+\newcommand{\vref}{\ensuremath{v_\bez}}
+%------------------------------------------------------------------------------%
+\newcommand{\BL}{\ensuremath{\stackrel[L]{}{B}\!\vphantom{B}}}
+\newcommand{\BA}{\ensuremath{\stackrel[A]{}{B}\!\vphantom{B}}}
+\newcommand{\bmBL}{\ensuremath{\stackrel[L]{}{\bm{B}}\!\vphantom{\bm{B}}}}
+\newcommand{\bmBA}{\ensuremath{\stackrel[A]{}{\bm{B}}\!\vphantom{\bm{B}}}}
+%------------------------------------------------------------------------------%
+\newcommand{\rhoL}{\ensuremath{\stackrel[L]{}{\rho}\!\vphantom{\rho}}}
+\newcommand{\rhoA}{\ensuremath{\stackrel[A]{}{\rho}\!\vphantom{\rho}}}
+\newcommand{\rhoV}{\ensuremath{\stackrel[V]{}{\rho}\!\vphantom{\rho}}}
+%------------------------------------------------------------------------------%
+\newcommand{\er}{\ensuremath{\bm{e}_r}}
+\newcommand{\etheta}{\ensuremath{\bm{e}_\theta}}
+\newcommand{\ephi}{\ensuremath{\bm{e}_\vp}}
+%------------------------------------------------------------------------------%
+\newcommand{\nosum}[1]{\ensuremath{{\underline{#1}}}}
+%------------------------------------------------------------------------------%
+\newcommand{\eps}{\ensuremath{\epsilon}}
+\newcommand{\0}{\ensuremath{\emptyset}}
+\newcommand{\const}{\ensuremath{\mathrm{const.}}}
+\newcommand{\bez}{\ensuremath{\text{ref.}}}
+\newcommand{\Rey}{\ensuremath{\mathit{Re}}}
+\newcommand{\Remag}{\ensuremath{\Rey_\text{mag.}}}
+%------------------------------------------------------------------------------%
+%\newcommand{\inv}[1]{\ensuremath{\stackrel[]{-1}{#1}}}
+\newcommand{\inv}[1]{\stackrel{-1}{#1}\!\!\vphantom{#1}}
+%------------------------------------------------------------------------------%
+\newcommand{\tripleF}[3]{\ensuremath{F_{#1 1}F_{#2 2}F_{#3 3}}}
+%------------------------------------------------------------------------------%
+\renewcommand{\d}[1]{\ensuremath{\mathrm{d}#1} }
+\newcommand{\drm}[1]{\ensuremath{\,\mathrm{d}#1}}
+\newcommand{\irm}{\ensuremath{\mathrm{i}}}
+%------------------------------------------------------------------------------%
+\newcommand{\epsijk}{\ensuremath{\epsilon_{ijk}}}
+\newcommand{\grad}[1]{\operatorname{grad}\left(#1\right)}
+\newcommand{\rot}[2][]{\operatorname{rot}_{#1}\left(#2\right)}
+\renewcommand{\div}[1]{\ensuremath{\operatorname{div}\left(#1\right)}}
+\newcommand{\laplace}{\ensuremath{\Delta}}
+\newcommand{\deter}[1]{\det{\left(\bm{#1}\right)}}
+\newcommand{\spur}[1]{\operatorname{spur}\left(\bm{#1}\right)}
+\newcommand{\LOperator}[2][]{
+	\ifthenelse{\equal{#1}{}}
+		{\ensuremath{L\!\left[#2\right]}}
+		{\ensuremath{L_{#1}\!\left[#2\right]}}
+		}
+\newcommand{\DOperator}[3][]{
+	\ifthenelse{\equal{#1}{}}
+		{	\ifthenelse{\equal{#2}{}}
+			{\ensuremath{D\!\left[#3\right]}}
+			{\ensuremath{D^{\left(#2\right)}\!\left[#3\right]}}}
+		{	\ifthenelse{\equal{#2}{}}
+			{\ensuremath{D_{#1}\!\left[#3\right]}}
+			{\ensuremath{D_{#1}^{\left(#2\right)}\!\left[#3\right]}}
+		}
+	}
+\newcommand{\DThetaPhiOperator}[2]{
+	\ensuremath{
+		\mathcal{D}_{\theta,\vp}\!\left[#1,#2\right]
+		}
+	}
+\newcommand{\bmDThetaPhiOperator}[1]{
+	\ensuremath{
+		\bm{\mathcal{D}}_{\theta,\vp}\!\left[#1\right]
+		}
+	}
+\newcommand{\bmDThetaPhi}{\ensuremath{\bm{\mathcal{D}}_{\theta,\vp}}}
+\newcommand{\landau}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
+\newcommand{\order}[1]{\ensuremath{\mathcal{O}\left(#1\right)}}
+\newcommand{\levicivi}[1]{\ensuremath{\varepsilon_{#1}}}
+\newcommand{\abs}[1]{\ensuremath{\left| #1 \right|}}
+\newcommand{\norm}[1]{\ensuremath{\left|\!\left| #1 \right|\!\right|}}
+\newcommand{\scalar}[2]{\ensuremath{\left\langle #1,#2\right\rangle}}
+\newcommand{\conj}[1]{\ensuremath{\overline{#1}}}
+%------------------------------------------------------------------------------%
+\newcommand{\vr}{\varrho}
+\newcommand{\vt}{\vartheta}
+\newcommand{\vp}{\varphi}
+%------------------------------------------------------------------------------%
+\newcommand{\si}[1]{\sin{\left(#1\right)}}
+\newcommand{\co}[1]{\cos{\left(#1\right)}}
+\newcommand{\ta}[1]{\tan{\left(#1\right)}}
+\newcommand{\cota}[1]{\cot{\left(#1\right)}}
+\newcommand{\sih}[1]{\sinh{\left(#1\right)}}
+\newcommand{\coh}[1]{\cosh{\left(#1\right)}}
+\newcommand{\tah}[1]{\tanh{\left(#1\right)}}
+\newcommand{\siq}[1]{\sin^2{\left(#1\right)}}
+\newcommand{\coq}[1]{\cos^2{\left(#1\right)}}
+\newcommand{\taq}[1]{\tan^2{\left(#1\right)}}
+\newcommand{\asi}[1]{\arcsin{\left(#1\right)}}
+\newcommand{\aco}[1]{\ensuremath{\arccos{\left(#1\right)}}}
+\newcommand{\ata}[1]{\ensuremath{\arctan{\left(#1\right)}}}
+%------------------------------------------------------------------------------%
+\newcommand{\expo}[1]{\ensuremath{\exp{\left(#1\right)}}}
+\newcommand{\alegend}[3][]{
+	\ifthenelse{\equal{#1}{}}
+		{\ensuremath{P_{#2}^{#3}}}
+		{\ensuremath{P_{#2}^{#3}\!\left(#1\right)}}
+		}
+\newcommand{\dalegend}[3][]{
+	\ifthenelse{\equal{#1}{}}
+		{\ensuremath{{P_{#2}^{#3}}'}}
+		{\ensuremath{{P_{#2}^{#3}}'\!\left(#1\right)}}
+		}
+\newcommand{\ddalegend}[3][]{
+	\ifthenelse{\equal{#1}{}}
+		{\ensuremath{{P_{#2}^{#3}}''}}
+		{\ensuremath{{P_{#2}^{#3}}''\!\left(#1\right)}}
+		}		
+\newcommand{\Plm}[1]{\ensuremath{\alegend[#1]{l}{m}}}
+\newcommand{\Plmcos}{\ensuremath{\alegend[\co{\theta}]{l}{m}}}
+%------------------------------------------------------------------------------%
+\newcommand{\pair}[2]{\ensuremath{
+	\begin{Bmatrix}
+	#1 \\ #2
+	\end{Bmatrix}
+	}}
+%------------------------------------------------------------------------------%
+\newcommand{\kreis}[1]{\ \unitlength1ex\begin{picture}(2.5,2.5)%
+\put(0.75,0.75){\circle{2.5}}\put(0.75,0.75){\makebox(0,0){#1}}\end{picture}}

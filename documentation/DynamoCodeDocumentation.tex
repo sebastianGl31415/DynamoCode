@@ -1,0 +1,241 @@
+%------------------------------------------------------------------------------%
+%----- Hinweise ---------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% Folgende Abkürzung dient nur der besseren Lesbarkeit in den Kommentaren:
+% $miktex$ = Pfad zum Hauptverzeichnis der MiKTeX-Installation
+
+
+
+%------------------------------------------------------------------------------%
+%---- Druckversion oder Digitalversion? ---------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> ifprint
+% Funktion: Zwischen Druck- und Digitalversion umschalten
+% Hinweise: Die Digitalversion ist für den Gebrauch am Rechner gedacht. Aus
+%           diesem Grund werden Verweise auf Abschnitte etc. farbig
+%           hervorgehoben. Die Druckversion besitzt nur schwarze Schriften.
+%           Bei der Digitalversion wird zudem der Textkörper mittig auf der
+%           Einzelseite zentriert, was beim doppelseitigem Druck durch das
+%           Zusammenwirken von zwei Seiten nicht der Fall ist.
+% Gebrauch: Entweder \printtrue oder \printfalse
+% Referenz: -
+\newif\ifprint
+\printtrue % Druckversion
+%\printfalse % Digitalversion
+
+
+
+%------------------------------------------------------------------------------%
+%---- Präambel, Einstellungen -------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> preamble
+% Funktion: Präambel
+% Hinweise: In der Präambel werden die Grundeinstellungen des Dokuments wie
+%           allgemeines Layout vorgenommen und Pakete geladen.
+%           Hier nur Änderungen vornehmen, wenn die Bedeutung der einzelnen
+%           Pakete und Optionen genau bekannt ist.
+% Referenz: -
+\input{config/preamble}
+
+
+% >> docspecific
+% Funktion: Dokumentenspezifische Daten
+% Hinweise: Hier bitte die dokumentenspezifischen Daten einstellen. 
+%           Die PDF-Metadaten (Autor, Titel, etc.) erscheinen in den
+%           Eigenschaften der PDF-Datei. Weiterhin können Benennung geändert
+%           werden oder Symbole etc. hinzugefügt werde.
+% Referenz: -
+\input{config/docspecific}
+
+
+% >> macros
+% Funktion: Makro-Befehle und Umgebungen
+% Hinweise: Hier werden Befehle und Umgebungen definiert, die die tägliche
+%           Arbeit mit LaTeX erleichtern und helfen eine konsistente
+%           Formatierung zu realisieren.
+%           Außerdem besteht die Möglichkeit sich hier eigene Befehle zu
+%           definieren, um wiederkehrende Aufgaben zu erledigen.
+% Referenz: -
+\input{config/macros}
+
+%\bibliography{content/backmatter/literatur}
+
+%------------------------------------------------------------------------------%
+%---- Dokumentenanfang --------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+\begin{document}
+
+%------------------------------------------------------------------------------%
+%---- Titelei (Front Matter) --------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \frontmatter
+% Funktion: Titelei (front matter)
+% Hinweise: Leitet die Titelei (front matter) ein. Dabei wird die Nummerierung
+%           automatisch auf römischen Ziffern (i, ii, iii, ...) umgestellt.
+%           \frontmatter ist nur für die Klassen book bzw. scrbook definiert.
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%           $miktex$/doc/latex/base/usrguide.dvi
+%\frontmatter
+
+
+% >> \pagestyle
+% Funktion: Layout bzgl. Paginierung und Kopfzeile
+% Hinweise: \pagestyle{empty}: keine Paginierung/Kopfzeile
+%           \pagestyle{plain}: Paginierung, keine Kopfzeile
+%           \pagestyle{headings}: Paginierung und Kopfzeile
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%\pagestyle{empty}
+
+
+% >> cover
+% Funktion: Cover
+% Hinweise: Das Cover gehört im Buchdruck NICHT zum eigentlichen Dokument.
+%           Der Grund ist, dass sowohl bzgl. Seitenränder, Design als auch
+%           Papier normalerweise abweichende Forderungen gestellt werden.
+%           Diese Vorlage hält sich an das Prinzip und ermöglicht somit
+%           insbesondere eine individuelle Wahl der Seitenränder für das Cover
+%           und die Möglichkeit ggfs. Grafik- und Layout-Programme zu nutzen.
+%           Das Cover (inkl. leerer Rückseite) wird daher als PDF eingebunden.
+% Referenz: -
+%\pdfbookmark[1]{Cover}{cover} % Bookmark im PDF (hyperref-Paket)
+%\includepdf[pages={1}]{./cover/cover.pdf} % PDF einbinden (pdfpages-Paket)
+\subject{Documentation}
+\title{Finite Difference Method for the Bullard-Gellman Equations}
+\subtitle{using \textsc{GNU Octave}/\textsc{Matlab}}
+\author{Sebastian Glane}
+\maketitle
+
+% >> eidesstatt
+% Funktion: Eidesstattliche Erklärung
+% Hinweise: -
+% Referenz: -
+%\pdfbookmark[1]{Eidesstattliche Erklärung}{erklaerung} % Bookmark im PDF
+%\include{content/frontmatter/eidesstatt}
+%\cleardoublepage % Damit Aufgabenstellung auf rechter Seite beginnt
+
+
+% >> aufgabe
+% Funktion: Aufgabenstellung
+% Hinweise: Einbindung der Aufgabenstellung (PDF)
+% Referenz: -
+% Bookmark im PDF (hyperref-Paket)
+%\pdfbookmark[1]{Aufgabenstellung}{aufgabenstellung}
+% PDF einbinden (pdfpages-Paket)
+%\includepdf[pages={1,2}]{includepdf/2012_07_Glane_SemiAktiverDaempfer_Bachelor.pdf}
+
+
+% >> \pagestyle
+% Funktion: Layout bzgl. Paginierung und Kopfzeile
+% Hinweise: \pagestyle{empty}: keine Paginierung/Kopfzeile
+%           \pagestyle{plain}: Paginierung, keine Kopfzeile
+%           \pagestyle{headings}: Paginierung und Kopfzeile
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%\pagestyle{plain} % nur Seitenzahlen ohne Kopfzeile
+%\pagestyle{headings} % KOMA-script pagestyle: Kopfzeilen
+
+
+% >> \tableofcontents
+% Funktion: Inhaltsverzeichnis
+% Hinweise: Das Inhaltsverzeichnis wird automatisch anhand der
+%           Dokumentenstruktur generiert. Die Aufnahme in die PDF-Bookmarks
+%           erfolgt durch das bookmark- und hyperref-Paket
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%           $miktex$/doc/latex/hyperref/paper.pdf
+
+%\cleardoublepage % damit das Bookmark auf der richtigen Seite gesetzt wird
+%\pdfbookmark[1]{\contentsname}{toc} % Bookmark im PDF (hyperref-Paket)
+
+% KOMA-Script hat im Inhaltsverzeichnis nur einzeiligen Zeilenabstand, deshalb
+% wird er mit Hilfe des setspace-Paketes erhöht, um ein Kompromiss zwischen den
+% LaTeX-Standardeinstellungen (ohne parkskip 1,5-zeiliger Abstand) und dem
+% KOMA-Script zu erhalten.
+%\begin{spacing}{1.15} % Zeilenabstand vergrößern (setspace-Paket)
+%\cleardoublepage % damit das Bookmark auf der richtigen Seite gesetzt wird
+%\tableofcontents  % Inhaltsverzeichnis generieren
+
+% >> \listof...
+% Funktion: Tabellen-/Abbildungsverzeichnis
+% Hinweise: Durch entsprechende KOMA-Script-Optionen werden die Verzeichnisse
+%           automatisch ins Inhaltsverzeichnis übernommen.
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%\cleardoublepage % damit das Bookmark auf der richtigen Seite gesetzt wird
+%\listoffigures
+%\cleardoublepage % damit das Bookmark auf der richtigen Seite gesetzt wird
+%\lstlistoflistings
+%\cleardoublepage % damit das Bookmark auf der richtigen Seite gesetzt wird
+%\listoftables
+%\end{spacing} % Ende Zeilenabstand vergrößern (setspace-Paket)
+
+% >> Nomenklatur
+% Funktion: Erläuterung der Formelzeichen und Abkürzungen
+% Hinweise: -
+% Referenz: -
+%\input{content/frontmatter/nomenklatur}
+
+%------------------------------------------------------------------------------%
+%---- Kerntext (Main Matter) --------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \mainmatter
+% Funktion: Hauptteil (main matter)
+% Hinweise: Leitet den Hauptteil (main matter) ein. Dabei wird die Nummerierung
+%           automatisch auf arabische Ziffern (1, 2, 3, ...) umgestellt.
+%           \frontmatter ist nur für die Klassen book bzw. scrbook definiert.
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%           $miktex$/doc/latex/base/usrguide.dvi
+%\mainmatter
+
+% >> text
+% Funktion: Text
+% Hinweise: Der eigentliche Text des Dokumentes. Sinnvoll ist beispielsweise
+%           eine Unterteilung nach Kapiteln.
+% Referenz: -
+\input{content/Documentation}
+%\cleardoublepage % damit das Bookmark auf der richtigen Seite gesetzt wird
+
+%------------------------------------------------------------------------------%
+%---- Anhang (Appendix) -------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+%\appendix
+% Funktion: Anhang einleiten
+% Hinweise: \appendix: Kapitelüberschriftennummerierung A, B, C, ...
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%\appendix
+
+
+% >> anhang
+% Funktion: Anhang
+% Hinweise: -
+% Referenz: -
+%\numberwithin{equation}{chapter}
+%\input{content/appendix/Integraltheorems}
+%\cleardoublepage
+
+%------------------------------------------------------------------------------%
+%---- Nachspann (Back Matter) -------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \backmatter
+% Funktion: Nachspann einleiten
+% Hinweise: \backmatter: Kapitelüberschriften unnummeriert
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%\backmatter
+
+
+% >> \bibliography
+% Funktion: Literaturverzeichnis
+% Hinweise: einfaches Literaturverzeichnis ohne Unterteilungen
+% Gebrauch: -
+% Referenz: -
+\printbibliography
+%------------------------------------------------------------------------------%
+%---- Dokumentenende ----------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+\end{document} 

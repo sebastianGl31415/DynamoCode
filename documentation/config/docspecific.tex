@@ -1,0 +1,265 @@
+%------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+%--- Titel:    ...                                                          ---%
+%--- Autor:    ...                                                          ---%
+%--- Vorlage:  Dipl.-Ing. Timo Pe <timo.pe@tu-harburg.de>                   ---%
+%---           Institut für Flugzeug-Systemtechnik                          ---%
+%---           Neßpriel 5, 21129 Hamburg                                    ---%
+%---           http://www.fst.tu-harburg.de/                                ---%
+%------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+
+%------------------------------------------------------------------------------%
+%---- PDF-Metadaten -----------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> hypersetup
+% Funktion: PDF-Metadaten festlegen
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/hyperref/manual.pdf
+%           $miktex$/doc/latex/hyperref/paper.pdf
+\hypersetup{
+  pdftitle = {Autofrettage-Probleme in krummlinigen Koordinatensystemen},%
+  pdfkeywords = {Autofrettage-Probleme, Plastizität,
+  Zylinderkoordinaten, FEniCs},%
+  pdfauthor = {Sebastian Glane, Laurent Bernier},%
+  pdfcreator = {LaTeX, pdfTeX},  %
+  pdfsubject = {Autofrettage-Probleme}%
+}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Symbole -----------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> Diverse mathematische Symbol-Pakete
+% Funktion: Diverse Symbole werden zur Verfügung gestellt
+% Hinweise: Eine vollständige Auflistung ist der "Comprehensive LaTeX Symbol
+%           List" (symbols-a4.pdf) oder den einzelnen Paket-Beschreibung
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: Comprehensive LaTeX Symbol List (symbols-a4.pdf)
+%\usepackage{mathabx}   % mathtest.pdf/symbols-a4.pdf
+%\usepackage{MnSymbol}  % Math Symbols $miktex$/doc/font/mnsymbol/MnSymbol.pdf
+%\usepackage{amssymb}   % AMS-Symbole
+%\usepackage{upgreek}   % griechische, aufrechte Symbole
+%\usepackage{mathcomp}  %
+
+
+% >> Diverse Symbol-Pakete (keine Mathesymbole!)
+% Funktion: Diverse Symbole werden zur Verfügung gestellt
+% Hinweise: Eine vollständige Auflistung ist der "Comprehensive LaTeX Symbol
+%           List" (symbols-a4.pdf) oder den einzelnen Paket-Beschreibung
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: Comprehensive LaTeX Symbol List (symbols-a4.pdf)
+%\usepackage{textcomp}  % "Text-Mode" Symbole
+%\usepackage{marvosym}  % siehe $miktex$/doc/fonts/marvosym/marvodoc.pdf
+%\usepackage{pifont}    %
+%\usepackage{wasysym}   %
+
+
+
+%------------------------------------------------------------------------------%
+%---- Tabellen ---------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \newcolumntype
+% Funktion: Eigene Spaltentypen definieren
+% Hinweise: Rechtsbündige/zentrierte Spalte auf Basis von tabularx/ragged2e
+%           \hspace{0pt} > damit Silbentrennung auch dann funktioniert,
+%           wenn erstes Wort breiter als Spalte.
+% Gebrauch: -
+% Optionen: -
+% vor/nach: nach array-Paket, nach tabularx-Paket
+% Referenz: $miktex$/doc/latex/tools/array.dvi
+%           $miktex$/doc/latex/tools/tabularx.dvi
+%           tabsatz.pdf
+%\newcolumntype{L}{>{\RaggedRight\arraybackslash\hspace{0pt}}X}
+%\newcolumntype{R}{>{\RaggedLeft\arraybackslash\hspace{0pt}}X}
+%\newcolumntype{C}{>{\Centering\arraybackslash\hspace{0pt}}X}
+
+
+% >> \extrarowheight
+% Funktion: Extra-Höhe in Tabellen und Arrays
+% Hinweise: In der Standardeinstellung ist zu wenig Platz nach oben
+% Gebrauch: -
+% Optionen: -
+% vor/nach: array-Paket benötigt
+% Referenz: -
+\setlength{\extrarowheight}{1.5pt}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Konfiguration von Listen/Aufzählungen -----------------------------------%
+%------------------------------------------------------------------------------%
+
+% Erläuterung der Längen in "The LaTeX Companion", S. 145, 2nd. edition (2004)
+% \topsep, \partopsep, \itemsep, \listparindent, \itemindent, \labelwidth,
+% \labelsep, \parsep
+
+% Formatierung der Listen/Aufzählungen
+% Einrückung der Ebenen (immer alle 6 Ebenen angeben):
+\setdefaultleftmargin{5.0ex}{2.5ex}{2.5ex}{2.5ex}{2.5ex}{2.5ex}
+
+% Problem: \itemsep (für itemize) kann nicht global definiert werden
+% > deshalb: compactitem
+% Standard (itemize): 5.0pt plus 2.5pt minus 1.0pt
+\setlength{\plitemsep}{2.0pt plus 1.0pt minus 0.5pt} 
+
+% vertik. Abstand von Absätzen innerhalb eines items
+\setlength{\plparsep}{3.0pt plus 1.0pt minus 0.5pt}
+
+
+% >> Verkleinertes bullet-Symbol
+% Funktion: Verkleinertes bullet-Symbol
+% Hinweise: Durch ein einfaches \small falsche Ausrichtung, deshalb
+%           Verschiebung mit raisebox
+% Gebrauch: -
+% Optionen: -
+% vor/nach: nach calc (Längenberechnungen)
+% Referenz: $groups$/de.comp.text.tex/browse_thread/thread/3c7a42c50b3c7267
+\newcommand{\textbulletsmall}{%
+  \raisebox{(\heightof{\textbullet}-\heightof{\small\textbullet})/2}%
+  {\small\textbullet}%
+}%
+
+
+% Auflistungszeichen der itemize-Umgebung neu definieren
+\renewcommand\labelitemi{\textbulletsmall}
+\renewcommand\labelitemii{$\triangleright$}
+\renewcommand\labelitemiii{$\diamond$}
+\renewcommand\labelitemiv{--}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Bild-/Tabellenunterschriften --------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \figurename\tablename
+% Funktion: Umbenennung der \...name
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: ggf. nach babel
+% Referenz: DE-TeX-FAQ, Abschnitt 8.5.9, http://www.dante.de/faq/de-tex-faq/
+% Wenn Babel mit Option ngerman verwendet wird:
+\addto\captionsngerman{%
+ \renewcommand{\figurename}{Abbildung}    % Figure-Name
+ \renewcommand{\tablename}{Tabelle}  % Table-Name
+}%
+
+% Nur wenn Babel nicht verwendet wird (sonst wird es wieder von Babel
+% überschrieben:
+%\renewcommand{\figurename}{Bild}    % Figure-Name
+%\renewcommand{\tablename}{Tabelle}  % Table-Name
+
+
+
+%------------------------------------------------------------------------------%
+%---- Autobenennung bei Referenzen --------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \...autorefname
+% Funktion: Namen für \autoref-Links setzen
+% Hinweise: \autoref erzeugt automatisch einen Link für z.B. siehe "Bild 1.1",
+%           die Umgebung wird eigenständig erkannt.
+%           Für subsection der appendix kein autoref möglich!
+%           > manuell über hyperref Kommando erledigen!
+% Gebrauch: \autoref{[label]}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/hyperref/manual.pdf
+%           $miktex$/doc/latex/hyperref/paper.pdf
+%           $groups$/de.comp.text.tex/browse_thread/thread/21107c178bc2448e
+
+% Für weitere Umgebungen müssen die Links entweder manuell gesetzt werden per:
+% \hyperref[labelname]{Hier irgendein Text, siehe Bild \ref*{labelname}}
+% oder: über z.B. \newcommand{\subfigureautorefname}{Bild} definiert werden
+
+\AtBeginDocument{\renewcommand{\figureautorefname}{Abbildung}}
+\AtBeginDocument{\newcommand{\subfigureautorefname}{Abbildung}}
+\AtBeginDocument{\renewcommand{\tableautorefname}{Tabelle}}
+\AtBeginDocument{\renewcommand{\equationautorefname}{Gleichung}}
+\AtBeginDocument{\renewcommand{\chapterautorefname}{Kapitel}}
+\AtBeginDocument{\renewcommand{\sectionautorefname}{Abschnitt}}
+\AtBeginDocument{\renewcommand{\subsectionautorefname}{Abschnitt}}
+\AtBeginDocument{\renewcommand{\subsubsectionautorefname}{Abschnitt}}
+\AtBeginDocument{\renewcommand{\appendixautorefname}{Anhang}}
+% \AtBeginDocument{\newcommand{\appendixsectionautorefname}{Anhang} > geht nur manuell!
+
+%------------------------------------------------------------------------------%
+%---- Literaturverzeichnis / Zitierweise---------------------------------------%
+%------------------------------------------------------------------------------%
+%\ExecuteBibliographyOptions{
+%	sorting=,
+%	sortcase=,
+%	sortupper,
+%	sortlocale=auto,
+%	sortlos=bib,
+%	related=true,
+%	sortcites=true,
+%	maxnames=,
+%	minnames=,
+%	maxbibnames=,
+%	minbibnames=,
+%	maxcitenames=,
+%	mincitenames=,
+%	maxitems=,
+%	minitems=,
+%	autocite=plain,
+%	autopunct=true,
+%	language=autobib,
+%	clearlang=true,
+%	autolang=none,
+%	block=none,
+%	notetype=foot+end,
+%	hyperref=true,
+%	backref=true,
+%	backrefstyle=none,
+%	backrefsetstyle=setonly,
+%	indexing=true,
+%	loadfiles=true,
+%	refsection=none,
+%	refsegment=none,
+%	citereset=none,
+%	abbreviate=true,
+%	datelabel=year,
+%	origdate=year,
+%	eventdate=year,
+%	urldate=year,
+%	alldates=year,
+%	datezeros=true,
+%	dateabbrev=true,
+%	defernumbers=true,
+%	punctfont=true,
+%	arxiv=abs,
+%	texencoding=auto,
+%	bibencoding=auto,
+%	safeinputenc=true,
+%	bibwarn=true,
+%	mincrossrefs=,
+%	isbn=true,
+%	url=true,
+%	doi=true,
+%	eprint=true
+%	}
+
+
+\addbibresource{content/backmatter/literatur.bib}
+%\cite[prefix][suffix]{ref}
+%\parencite[prefix][suffix]{ref}
+%\footcite[prefix][suffix]{ref}
+%\textcite[prefix][suffix]{ref}
+%\autocite[prefix][suffix]{ref}
+
+\pgfplotsset{compat=1.8}

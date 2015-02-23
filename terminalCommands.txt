@@ -1,0 +1,14 @@
+# replace octave's control commands by MATLAB's
+sed -i '/endif/ s/endif/end/g' *.m &&
+sed -i '/endfunction/ s/endfunction/end/g' *.m &&
+sed -i '/endswitch/ s/endswitch/end/g' *.m &&
+sed -i '/endfor/ s/endfor/end/g' *.m
+# cut image's left- and righthand side by np pixels
+mogrify -shave (npix)x0 Animation.*.jpg 
+# add ffmpeg repository
+sudo add-apt-repository ppa:jon-severinsson/ffmpeg 
+# create animation %04d means integers field of length 4 with zero padding
+ffmpeg -i Animation.%04d.jpg -c:v libx264 -r 20 -pix_fmt yuv420p out.mp4
+# run Bullard Gellman code
+nice -n 15 matlab -nodesktop -nojvm -nodisplay -logfile output.txt < main.m >> 
+/dev/null &

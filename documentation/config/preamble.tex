@@ -1,0 +1,1255 @@
+%------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+%--- Titel:    ...                                                          ---%
+%--- Autor:    ...                                                          ---%
+%--- Vorlage:  Dipl.-Ing. Timo Pe <timo.pe@tu-harburg.de>                   ---%
+%---           Institut für Flugzeug-Systemtechnik                          ---%
+%---           Neßpriel 5, 21129 Hamburg                                    ---%
+%---           http://www.fst.tu-harburg.de/                                ---%
+%------------------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+
+%------------------------------------------------------------------------------%
+%---- Hinweise ----------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% Folgende Abkürzungen dienen nur der besseren Lesbarkeit in den Kommentaren:
+% $miktex$ = Pfad zum Hauptverzeichnis der MiKTeX-Installation
+% $groups$ = http://groups.google.de/group
+
+
+
+%------------------------------------------------------------------------------%
+%--- \listfiles ---------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \listfiles
+% Funktion: Ausgabe der verwendeten Pakete in der Log-Datei
+% Hinweise: Durch die Log-Datei ist im Nachhinein nachvollziehbar, welche
+%           Paketversionen verwendet wurden. Der Name der Log-Datei wird durch
+%           das Hauptdokument (\jobname, hier: fst-template) bestimmt:
+%           \jobname.log
+% Gebrauch: \listfiles
+% Optionen: -
+% vor/nach: vor \documentclass{}
+% Referenz: $miktex$/doc/latex/base/usrguide.dvi
+\listfiles
+
+
+
+%------------------------------------------------------------------------------%
+%---- Dokumentenklasse --------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \documentclass
+% Funktion: Dokumentenklasse definieren
+% Hinweise: Verwendet werden die Klassen aus dem KOMA-Script
+% Gebrauch: -
+% Optionen: siehe scrguide.pdf
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+% KOMA-Script < 3.00 (erzeugt Warnings für >= 3.00)
+% \documentclass[%
+%     paper=a4,               % Papierformat
+%     twoside,                % beidseitig bedruckt
+%     fontsize=12pt,          % Schriftgröße
+%     titlepage,              % Titelseite
+%     liststotoc,             % Tabellen-/Abb.verzeichnis ins Inhaltsverzeichnis
+%     bibtotoc,               % Literaturverzeichnis ins Inhaltsverzeichnis
+%     listsleft,              % Tabellen-/Abb.verzeichnis ohne Einzug
+%     openright,              % Kapitel beginnen immer auf der rechten Seite
+%     cleardoublepage=empty,  % pagestyle für leere Seite vor Kapitel
+%     headsepline=true,       % Header mit Linie abtrennen
+%     footsepline=false,      % Footer nicht mit Linie abtrennen
+%     tablecaptionabove,      % Abstände anpassen, für Captions oberhalb von Tab.
+%     pointlessnumbers,       % sonst bei Verwendung von \appendix autom. Punkte
+%     halfparskip-,           % halber Zeilenabstand zwischen Absätzen
+%     normalheadings          % Überschriften "normaler" Größe
+% ]{scrbook}
+
+% KOMA-Script >= 3.00 (Optionen nach key=value-Prinzip)
+\documentclass[%
+    paper=A4,               % Papierformat
+    twoside=false,           % beidseitig bedruckt
+    fontsize=12pt,          % Schriftgröße
+    titlepage=false,         % Titelseite
+    listof=totoc,           % Tabellen-/Abb.verzeichnis ins Inhaltsverzeichnis
+    bibliography=totoc,     % Literaturverzeichnis ins Inhaltsverzeichnis
+    listof=flat,            % Tabellen-/Abb.verzeichnis ohne Einzug
+%    open=right,             % Kapitel rechts beginnen
+    cleardoublepage=empty,  % pagestyle für leere Seite vor Kapitel
+    headsepline=true,       % Header mit Linie abtrennen
+    footsepline=false,      % Footer nicht mit Linie abtrennen
+    captions=tableheading,	% Abstände anpassen, für Captions oberhalb von Tab.
+    numbers=noendperiod,    % keine Punkte am Ende von Kapitel-/Anhangnummern
+    parskip=half-,          % halber Zeilenabstand zwischen Absätzen
+    headings=normal,         % Überschriften "normaler" Größe
+%    draft
+]{scrartcl}					% Version 3.00 wurde 2008-11-03 veröffentlicht
+
+
+% >> scrhack
+% Funktion: KOMA-Paket, das Probleme mit _fremden_ Paketen löst
+% Hinweise: Probleme mit hyperref, listings, float werden adressiert
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/koma-script/scrhack.pdf
+\usepackage{scrhack}
+\KOMAoptions{hyperref=false}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Schrifttyp --------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> lmodern
+% Funktion: Latin Modern Schriftart
+% Hinweise: wie Computer Modern Schriftart, jedoch ist die "bold"-Variante
+%           fetter, außerdem besser Unterstützung von Akzenten etc.
+% Gebrauch: -
+% Optionen: -
+% vor/nach: Schrifttyp vor der Satzspiegelberechnung durch typearea definieren
+% Referenz: $miktex$/doc/fonts/lm/lm-info.pdf
+\usepackage{lmodern}
+
+
+% >> inputenc
+% Funktion: Umlaute etc. direkt im Quelltext ermöglichen
+% Hinweise: -
+% Gebrauch: -
+% Optionen: latin1: ISO Latin Zeichen
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/base/inputenc.dvi
+\usepackage[utf8]{inputenc}
+
+
+% >> lccode/defaulthyphenchar
+% Funktion: Silbentrennung auch bei Wörtern, die Bindestrich besitzen
+% Hinweise: Bei zusammengesetzten Wörter, die einen Bindestrich besitzen
+%           (z.B. Flugzeug-Systemtechnik) wird standardmäßig NUR am Bindestrich
+%           getrennt. Vor oder nach dem Bindestrich wird nicht getrennt.
+%           Insbesondere bei langen Wörter, kann es so schnell zu underfull oder
+%           overfull boxes kommen.
+% Gebrauch: -
+% Optionen: -
+% vor/nach: fontenc
+% Referenz: $groups$/de.comp.text.tex/msg/35c3777fc9a6fd6b
+% Referenz: $groups$/de.comp.text.tex/msg/1984119fb99db691
+% Referenz: $groups$/de.comp.text.tex/browse_thread/thread/b629ea667f5b7045
+\lccode`\-=`\-
+\defaulthyphenchar=127 
+
+
+% >> fontenc
+% Funktion: Zeichentabelle für Sonderzeichen/Umlaute erweitern
+% Hinweise: Umlaute werden (trotz lmodern) standardmäßig aus normalen Zeichen
+%           plus Punkte/Akzente etc. zusammengesetzt. fontenc ermöglicht
+%           eine erweiterte Zeichentabelle mit expliziten Sonderzeichen etc.
+% Gebrauch: -
+% Optionen: T1: Font-Kodierung für westeuropäische Sprachen
+% vor/nach: -
+% Referenz: -
+\usepackage[T1]{fontenc}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Satzspiegelberechnung ---------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% Für Infos zur Satzspiegelberechnung siehe:
+% - $miktex$/doc/latex/koma-script/scrguide.pdf
+% - "The LaTeX Companion", S. 194, 2nd. edition (2004)
+% - $miktex$/doc/latex/geometry/geometry.dvi
+
+% Hinweis:
+% Die Vorlage wählt bewusst eine feste Größe des Textbereiches, der sowohl in
+% der Druck- als auch in der Digitalversion gleich bleibt. So werden
+% Verschiebungen verhindert. Außerdem hat es den Vorteil, dass der Autor für
+% Bilder mit einer maximalen Größe rechnen kann.
+
+% >> geometry
+% Funktion: Satzspiegelberechnung durch Vorgabe fixer Parameter
+% Hinweise: Die offenen Parameter werden vom Paket automatisch berechnet
+% Optionen: siehe $miktex$/doc/latex/geometry/geometry.dvi
+% vor/nach: vor fancyhdr
+% Referenz: $miktex$/doc/latex/geometry/geometry.dvi
+\usepackage[a4paper]{geometry}
+
+% Mit der if-Abfrage \ifprint wird zwischen Druck- und Digitalversion
+% umgeschaltet!
+\ifprint % Druck: Ränder Doppelseite im Verhältnis 1:1:1, mit Bindekorrektur
+  \geometry{%
+    includehead=true, % wg. fancyhdr-Formatierung zählt Head optisch zum Text
+    hmarginratio=1:2, % Rand innen:außen (für Doppelseite ergibt sich: 1:1:1)
+    vmarginratio=3:5, % Rand oben:unten (Standard: typearea 1:2, geometry 2:3)
+    textwidth=170mm,  % Breite der Textfläche (ohne Randnotizen)
+    textheight=230mm, % Höhe der Textfläche (ohne Header)
+    headheight=20pt,  % Header größer gegen overfull vboxes (Standard: 12pt)
+    footskip=15mm,    % Abstand Baseline des Footer zum Textkörper
+    bindingoffset=6mm % Bindekorrektur BCOR
+  }%
+\else % Digital: horizontal zentriert, ohne Bindekorrektur
+  \geometry{%
+    includehead=true, % wg. fancyhdr-Formatierung zählt Head optisch zum Text
+    hmarginratio=1:1, % Rand innen:außen (PDF: Textkörper zentrieren!)
+    vmarginratio=3:5, % Rand oben:unten (Standard: typearea 1:2, geometry 2:3)
+    textwidth=170mm,  % Breite der Textfläche (ohne Randnotizen)
+    textheight=230mm, % Höhe der Textfläche (ohne Header)
+    headheight=20pt,  % Header größer gegen overfull vboxes (Standard: 12pt)
+    footskip=15mm,    % Abstand Baseline des Footer zum Textkörper
+    bindingoffset=0mm % Bindekorrektur BCOR
+  }%
+\fi
+
+
+
+%------------------------------------------------------------------------------%
+%---- Absatzlayout ------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> setspace
+% Funktion: Zeilenabstand verändern
+% Hinweise: global oder lokal beschränkt
+% Gebrauch: -
+% Optionen: -
+% vor/nach: wenn global: vor typearea
+% Referenz: $miktex$/tex/latex/setspace/setspace.sty
+\usepackage{setspace}
+
+
+% >> hanging
+% Funktion: Hängender Einzug
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/hanging/hanging.pdf
+%\usepackage{hanging}
+
+
+% >> ...penalty
+% Funktion: Alleinstehende Zeilen verhindern
+% Hinweise: Durch penalty werden alleinstehende Zeilen "bestraft".
+%           Durch einen hohen Wert (10000) ist die Bestrafung maximal,
+%           so dass die Zeilen verhindert werden
+% Gebrauch: \widowpenalty = 10000 (alleinstehende Zeilen am Seitenkopf)
+%           \clubpenalty = 10000 (alleinstehende Zeilen am Seitenfuß)
+%           \displaywidowpenalty = 10000 (alleinstehende Zeilen nach Formeln)
+% Optionen: -
+% vor/nach: -
+% Referenz: -
+\widowpenalty=10000
+\clubpenalty=10000
+\displaywidowpenalty=10000
+
+
+% >> moderate Umgebung
+% Funktion: Einstellungen der Umbruchautomatiken
+% Hinweise: Axel Reichert "moderate" Werte, die einen guten Kompromiss für
+%           Umbruchprobleme (underfull- und overfull-boxes) darstellen.
+% Gebrauch: \tolerance 1414
+%           \emergencystretch 1.5em
+%           \hbadness 1414
+%           \hfuzz 0.3pt
+%           \vfuzz 0.3pt
+% Optionen: -
+% vor/nach: -
+% Referenz: $groups$/de.comp.text.tex/msg/c375ef11e78e7bfa
+
+
+% >> \tolerance und \emergencystretch
+% Funktion: Zeilenumbruchautomatiken
+% Hinweise: TeXs first attempt at breaking lines is performed without even
+%           trying hyphenation: TeX sets its tolerance of line breaking
+%           oddities to the internal value \pretolerance, and sees what happens.
+%           If it cant get an acceptable break, TeX adds the hyphenation points
+%           allowed by the current patterns, and tries again using the internal
+%           \tolerance value. If this pass also fails, and the internal
+%           \emergencystretch value is positive, TeX will try a pass that allows
+%           \emergencystretch worth of extra stretchability to the spaces in
+%           each line.
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: http://www.tex.ac.uk/cgi-bin/texfaq2html?label=overfull
+\tolerance 1414
+\emergencystretch 1.5em
+
+
+% >> \hbadness
+% Funktion: -
+% Hinweise: Grenzwert für »schlechte« Zeilen, bzw. Boxen, der angibt, ab
+%           welcher Negativbewertung eine \hbox protokolliert wird. 
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: www.jr-x.de/publikationen/latex/tipps/zeilenumbruch.html
+\hbadness 1414
+
+
+% >> \hfuzz \vfuzz
+% Funktion: Horizontalen/vertikalen Überstand erlauben, ohne overfull zu melden
+% Hinweise: -
+% Gebrauch: \hfuzz [Länge]
+%           \vfuzz [Länge]
+% Optionen: -
+% vor/nach: -
+% Referenz: -
+\hfuzz 0.3pt
+\vfuzz 0.3pt
+
+
+% >> \raggedbottom \flushbottom
+% Funktion: Bestimmt wo der letzte Absatz platziert wird
+% Hinweise: -
+% Gebrauch: \raggedbottom (Voreinstellung für article, report und letter o.ä.)
+%           > keine Dehnung der Absätze zum Textfuß, d.h. der letzte
+%           Absatz Ende u.U. schon vor dem Textfuß
+%           \flushbottom (Voreinstellung für book o.ä.)
+%           > letzter Absatz endet immer am Textfuß, d.h. Dehnung
+% Optionen: -
+% vor/nach: -
+% Referenz: http://www.weinelt.de/latex/raggedbottom.html
+%           http://www.weinelt.de/latex/flushbottom.html
+\raggedbottom
+%\flushbottom
+
+
+
+%------------------------------------------------------------------------------%
+%---- Abschnittslayout (chapter, sections, paragraphs) ------------------------%
+%------------------------------------------------------------------------------%
+
+% >> \...depth
+% Funktion: Tiefe der Überschriftennummerierung/-anzeige
+% Hinweise: part:         -1
+%           chapter:       0
+%           section:       1
+%           subsection:    2
+%           subsubsection: 3
+%           paragraph:     4
+%           subparagraph:  5
+% Gebrauch: secnumdepth: Tiefe der im Text zu nummerierenden Überschriften
+%           tocdepth: Tiefe der im Inhaltsverzeichnis angezeigten Überschriften
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/koma-script/scrguide.pdf
+%           DE-TeX-FAQ, Abschnitt 7.1.3, http://www.dante.de/faq/de-tex-faq/
+%\setcounter{secnumdepth}{2} % subsection
+%\setcounter{tocdepth}{2} % subsection
+
+
+% Layout von sections/paragraphs ändern
+% Die Änderung erfolgt manuell durch Kopieren einer vorhandenen Formatierung
+% und manuelles Anpassen. Die Layouts können aus den entsprechenden
+% Dokumentenklassen kopiert werden.
+%
+%\@startsection werden folgende Parameter übergeben:
+% #1 Name der Gliederungsebene
+% #2 Tiefe der Ebene (toclevel)
+% #3 Einzug vom linken Rand
+% #4 Abstand zum vorhergehenden Text (beforeskip):
+%    - fester Abstand: z.B. "2.5ex"
+%    - dehnbarer Abstand (glue): z.B. "2.5ex \@plus0.6ex \@minus0.15ex"
+%    - negative Werte: Unterdrückung des Einzugs des folgenden Abstands (?)
+% #5 Abstand nach der Überschrift (afterskip):
+%    - wie bei #4, allerdings:
+%    - bei negativen Werten wird die Überschrift eingebettet
+%     (wie es bei paragraph voreingestellt ist)
+% #6 Formatierung der Schrift:
+%    z.B. \bfseries, \large etc.
+%
+% Hinweis:
+% - \p@ = Token für "1pt"
+% - \z@ = Token für "0pt"
+
+% >> \renewcommand\paragraph
+% Funktion: Punkt hinter \paragraph-Überschrift einfügen
+% Hinweise: Kopie von Paragraph aus scrbook.cls, \dottedsection angefügt.
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $groups$/de.comp.text.tex/msg/60942741d3ede7d7
+
+%\newcommand{\dottedsection}[1]{#1.} 
+%
+%\makeatletter
+%\renewcommand\paragraph{%
+%\@startsection%
+%  {paragraph}%
+%  {4}%
+%  {\z@}%
+%  {3.25ex \@plus1ex \@minus.2ex}%
+%  {-1em}%
+%  {\raggedsection\normalfont\sectfont\nobreak\size@paragraph\dottedsection}%
+%}
+%\makeatother
+
+
+% >> \@pnumwidth
+% Funktion: erhöht die Breite für die Seitenzahlen im TOC
+% Hinweise: bei sehr breiten Zahlen >1000 oder römische Zahlen reicht der 
+%           Standardwert von 1.5em nicht aus, so dass overfull hboxes kommen.
+% Gebrauch: auch nur für einzelne Abschnitte hin- und herschalten:
+%           \addtocontents{toc}{\protect\renewcommand{\protect\@pnumwidth}{3em}}
+% Optionen: -
+% vor/nach: -
+% Referenz: DE-TeX-FAQ, Abschnitt 7.1.1, http://www.dante.de/faq/de-tex-faq/
+%\makeatletter
+%\renewcommand{\@pnumwidth}{1.85em} % Standard: 1.5em
+%\makeatother
+
+
+% >> \renewcommand{\chapter}
+% Funktion: Chapter in den PDF-Bookmarks fett darstellen
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $groups$/de.comp.text.tex/browse_thread/thread/9a3956b262a12490
+%\makeatletter
+%\newcommand{\saved@chapter}{}
+%\let\saved@chapter\chapter
+%\newcommand*{\my@chapter}[2][]{%
+%  \bookmarksetup{bold=true}%
+%  \saved@chapter[#1]{#2}%
+%  \bookmarksetup{bold=false}%
+%}
+%
+%\renewcommand{\chapter}{%
+%  \@ifstar{\saved@chapter*}{\@dblarg\my@chapter}%
+%}
+%\makeatother
+
+
+% >> \chapterheadstartvskip
+% Funktion: Abstand Seitenanfang <> Kapitelüberschrift
+% Hinweise: Im KOMA-Script ist standardmäßig ein relativ großer Abstand
+%           zwischen Seitenanfang und Kapitelüberschrift definiert.
+%           Achtung: definiert man \chapterheadstartvskip leer, dann bleibt
+%           trotzdem noch ein Abstand. Um diesen ganz zu entfernen muss man
+%           mit negativen Längen arbeiten: \vspace*{-5\topskip}
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $groups$/de.comp.text.tex/browse_thread/thread/48eb96b95c1f7bf3/
+%\renewcommand*{\chapterheadstartvskip}{%
+%\vspace*{\baselineskip} % KOMA-Script-Standard: 2.3\baselineskip
+%}
+
+\usepackage{scrpage2}
+
+%------------------------------------------------------------------------------%
+%---- Mathematisches ----------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> icomma
+% Funktion: Komma als Dezimaltrennzeichen im Mathematik-Modus
+% Hinweise: Standardmäßig ist der Punkt das Dezimaltrennzeichen und das Komma
+%           nur für Auflistungen (z.B. f(a, b)) gedacht. Das Komma erzeugt
+%           deshalb einen zu großen Abstand.
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/was/icomma.dvi
+%           http://projekte.dante.de/DanteFAQ/MathematischerFormelsatz#25
+%\usepackage{icomma}
+
+
+% >> amsmath
+% Funktion: Mathematik-Umgebungen/-Befehle
+% Hinweise: Standardmäßig sind alle griechischen Großbuchstaben bei AMS
+%           aufrecht, da sie meist Operatoren sind. Für die kursive Variante
+%           (als Variablen) steht \var... zur Verfügung: \Delta \varDelta
+% Gebrauch: -
+% Optionen: sumlimits: Grenzen bei Summenzeichen ober-/unterhalb (statt daneben)
+%           intlimits: Grenzen bei Integralen ober-/unterhalb (statt daneben)
+%           sum-/intlimits und sqrt{} > Wurzelzeichen wird gerade dargestellt,
+%           weil die Zeichen dadurch zu hoch werden
+% vor/nach: vor \numberwithin (wird nach hyperref verwendet, s.u.)
+% Referenz: $miktex$/doc/latex/amsmath/amsldoc.dvi
+\usepackage[sumlimits,intlimits]{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsxtra}
+\usepackage{amsfonts}
+%\usepackage{mathrsfs}
+%\usepackage{eucal}
+\usepackage{stackrel}
+\usepackage{tensor}
+\usepackage{mathtools}
+\usepackage{esint}
+%\usepackage{cancel}
+
+% >> easybmat
+% Funktion: Matrizen mit Linien/gleichen Spalten-/Reihengrößen
+% Hinweise: Alternativ auch arydshln für arrays verwendbar
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/easy/docbmat.dvi
+%\usepackage{easybmat}
+
+
+% >> bm, amsbsy
+% Funktion: Fettschreibung (mathematischer) Zeichen
+% Hinweise: amsbsy: AMS poor mans bold (Zeichen wird verdoppelt)
+% Gebrauch: \bm{Zeichen} \pmb{Zeichen}
+% Optionen: -
+% vor/nach: vor ngerman, da es sonst Konflikte gibt, siehe auch:
+%           $groups$/de.comp.text.tex/browse_thread/thread/8367cd3f38280631
+%           $groups$/de.comp.text.tex/msg/da31045a7a78352b
+% Referenz: $miktex$/doc/latex/tools/bm.dvi
+%           $miktex$/doc/latex/amsmath/amsldoc.dvi
+\usepackage{bm}
+%\usepackage{amsbsy}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Rechtschreibung, Silbentrennung -----------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> hyphsubst mit dehyph-exptl Trennmuster
+% Funktion: Verbesserung der Trennmuster (Silbentrennung)
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: vor babel
+% Referenz: $miktex$/doc/generic/dehyph-exptl/dehyph-exptl.pdf
+%\RequirePackage[ngerman=ngerman-x-latest]{hyphsubst}
+
+
+% >> babel
+% Funktion: Silbentrennung, lokale Namen
+% Hinweise: -
+% Gebrauch: -
+% Optionen: ngerman: neue deutsche Rechtschreibung
+%           english: englische Rechtschreibung
+% vor/nach: -
+% Referenz: $miktex$/doc/generic/babel/babel.pdf
+\usepackage[english]{babel}
+%\usepackage[english]{babel}
+
+
+% >> ngerman
+% Funktion: diverse Makros für die Vorgabe der Silbentrennung
+% Hinweise: When babel is used with the options ngerman or naustrian,
+%           babel will provide all features of the package ngerman.
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/german/gerdoc.dvi
+%\usepackage{ngerman}
+
+
+% >> ragged2e
+% Funktion: Verbessert den Flattersatz
+% Hinweise: Inbesondere bei kurzen Spalten/Textbreiten besserer Flattersatz
+% Gebrauch: \RaggedRight (=\FlushLeft)
+%           \RaggedLeft (=\FlushRight)
+%           > \Centering nicht verwendet, erzeugt underfull boxes,
+%             stattdessen den Standardbefehl \centering
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/ms/ragged2e.dvi
+\usepackage{ragged2e}
+
+
+% >> \left- und \righthyphenmin
+% Funktion: Mindestanzahl von Zeichen links/rechts neben der Trennstelle
+% Hinweise: Standard für beide Kommandos: 2
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: -
+%\lefthyphenmin=3 % Standard: 2
+%\righthyphenmin=3 % Standard: 2
+
+
+
+%------------------------------------------------------------------------------%
+%---- Einheiten ---------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% Diskussion über zu verwendendes Paket:
+% $groups$/de.comp.text.tex/browse_thread/thread/52817543ec82809a
+% $groups$/de.comp.text.tex/browse_thread/thread/8f1fa8b938541600
+%
+% Wichtiges über Schreibweisen, Formatierung der Einheiten:
+% http://www.ptb.de/de/publikationen/download/si_v1.pdf
+% http://physics.nist.gov/Pubs/SP330/sp330.pdf
+
+% >> units/sistyle/SIunits/fancyunits/siunitx etc.
+% Funktion: Einheitenformatierung
+% Hinweise: siehe unten
+% Gebrauch: units: \unit[#1]{#2}
+%           sistyle: \SI{#1}{#2}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/units/units.dvi
+%           $miktex$/doc/latex/sistyle/SIstyle-2.x.pdf
+%           $miktex$/doc/latex/siunits/SIunits.pdf
+%           fancyunits.pdf
+%           $miktex$/doc/latex/unitsdef/unitsdef.pdf
+%\usepackage{units}      % nur Abstand
+%\usepackage{SIunits}    % Einheitenmakros, besser: fancyunits
+%\usepackage{fancyunits} % basiert auf SIunits, verbessert bzgl. Schrift
+%\usepackage{siunitx}    % Einheitenmakros, Nummernformatierung
+\usepackage{sistyle}     % Nummernformatierung
+
+% Produktzeichen \SI{5e2}{N} wird zu: $5 \cdot 10^2\,\mathrm{N}$
+\SIproductsign{\cdot} 
+
+% Dezimaltrennzeichen: Komma
+\SIdecimalsign{,}
+
+
+% Hinweise zur Auswahl des Einheiten-Pakets:
+% - units kümmert sich nur um den Abstand
+% - \unit[#1]{#2}:
+%   #1: kann beliebiger Text sein
+%   #2: kann beliebiger Text sein
+% - sistyle hat den Vorteil, dass auch die Nummern formatiert werden
+%   (Gruppierung, Dezimalstellen etc.), Schreibweise schnell und übersichtlich.
+%   Keine vordefinierten Befehle, können aber in Verbindung mit SIunits
+%   trotzdem genutzt werden!
+%   Nachteil: bei Klammerung oder anderen Sonderzeichen wird trotzdem
+%   Gruppierung versucht!
+% - sistyle \SI{#1}{#2}:
+%   #1: Mathemodus, Gruppierung zu 3er als Standard
+%   #2: eigene Syntax, siehe manual
+% - SIunits scheint etwas zu aufwendig bezüglich der Schreibweise, dafür aber
+%   konsistenter in der Formatierung, wenn man die vordefinierten Befehle
+%   verwendet
+% - SIunits \unit{#1}{#2}:
+%   #1: Mathemodus
+%   #2: Mathemodus
+% - sistyle wird nicht mehr weiterentwickelt > Verweis auf siunitx
+% - siunitx: sehr gutes Paket, mit Einheitenmakros, Nummernformatierung und
+%   umfangreichen Konfigruationsmöglichkeiten
+%   > sistyle scheint aber intuitiver, da Einheiten direkt als Zeichen
+%     eingegeben werden können und auch \frac in der Einheit problemlos verwendet
+%     werden kann.
+%
+% >> SIstyle wird verwendet:
+%    \SI{1}{mm} \SI{123456.12E-8}{\frac{kg}{s}}
+%    Wenn Zeichen, die nicht Zahlen sind, vorkommen, manuell setzen:
+%    (255/255/170)\,mm (2\,--\,10)\,mm
+
+
+
+%------------------------------------------------------------------------------%
+%---- Längen ------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> calc
+% Funktion: Längenberechnungen etc.
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/tools/calc.dvi
+%\usepackage{calc}
+
+
+% >> printlen
+% Funktion: Umrechnung der Längen: pt,mm,cm,in, ...
+% Hinweise: -
+% Gebrauch: \uselengthunit{mm}\printlength{\textwidth}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/tex/latex/ltxmisc/printlen.sty
+%\usepackage{printlen}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Tabellen/Arrays ---------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> array
+% Funktion: Verbesserung von Tabellen und Arrays
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/tools/array.dvi
+\usepackage{array}
+
+
+% >> multirow
+% Funktion: Verbinden von Zellen in einer Spalte
+% Hinweise: -
+% Gebrauch: \multirow{<Anzahl der Zeilen>}{"*" oder <Breite>}{<Text>}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/faq/english/FAQ-multirow.html
+\usepackage{multirow}
+
+
+% >> tabularx
+% Funktion: Tabellenbreite passt sich der Gesamtbreite an
+% Hinweise: Neuer Spalentyp "X"
+%           Spaltentyp L/R/C wird in macros.tex definiert
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/tools/tabularx.dvi
+%           tabsatz.pdf
+\usepackage{tabularx}
+
+
+% >> booktabs
+% Funktion: Tabellen ohne vertikale Linien
+% Hinweise: -
+% Gebrauch: \toprule \midrule \bottomrule
+%           \cmidrule(<l/r/lr>)
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/booktabs/booktabs.dvi
+%           auch: tabsatz.pdf
+\usepackage{booktabs}
+
+
+% >> arydshln
+% Funktion: Gestrichelte Linien etc. in Arrays/Matrizen
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: nach array, longtable, colortab, colortbl
+% Referenz: $miktex$/doc/latex/arydshln/aryshln-man.pdf
+%\usepackage{arydshln}
+
+
+% >> dcolumn/rccol
+% Funktion: Tabellenzellen am Dezimaltrennzeichen ausrichten
+% Hinweise: dcolumn: nur Ausrichten
+%           rccol: Runden und Ausrichten
+% Gebrauch: dcolumn: D{sep.tex}{sep.dvi}{decimal places}
+%                    ggfs. über \newcolumntype definieren!
+%                    Wenn keine Ausrichtung: \multicolumn{1}{c/l/r}{...}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$doc/latex/tools/dcolumn.dvi
+%           $miktex$doc/latex/rccol/rccol.dvi
+%\usepackage{dcolumn}
+%\usepackage{fltpoint} % Benötigt von rccol Package
+%\usepackage{rccol}
+
+
+% >> colortbl
+% Funktion: Farbige Tabellen
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: -
+\usepackage{colortbl}
+
+%------------------------------------------------------------------------------%
+%---- Listen, Aufzählungen ----------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> paralist
+% Funktion: Formatierung von Listen/Aufzählungen
+% Hinweise: Formatierung der Listen in config/docspecific.tex
+% Gebrauch: -
+% Optionen: neverdecrease ist notwendig, damit bei Angabe eines alternativen
+%           Labels der leftmargin weiterhin verwendet wird (sonst ohne Abstand)
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/paralist/paralist.dvi
+%           "The LaTeX Companion", S. 145, 2nd. edition (2004)
+\usepackage[neverdecrease]{paralist}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Floats ------------------------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> top-/bottom-/totalnumber
+% Funktion: Maximale Anzahl der floats
+% Hinweise: Maximale Anzahl der floats, die auf einer Seite top bzw. bottom
+%           bzw. insgesamt auf der Seite platziert werden.
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: DE-TeX-FAQ, Abschnitt 6.1.3, http://www.dante.de/faq/de-tex-faq/
+\setcounter{topnumber}{3}     % Standard: 2
+\setcounter{bottomnumber}{2}  % Standard: 1
+\setcounter{totalnumber}{4}   % Standard: 3
+
+
+% >> \...fraction
+% Funktion: Maximaler zur Verfügung stehender Anteil bzw. mindestens
+%           ausgefüllter Anteil
+% Hinweise: 0 = 0%; 1 = 100%
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: DE-TeX-FAQ, Abschnitt 6.1.3, http://www.dante.de/faq/de-tex-faq/
+
+% Mindestanteil zur Erzeugung einer float-page (nur floats auf einer Seite)
+\renewcommand{\floatpagefraction}{0.7}  % Standard: 0.5
+
+% Mindestanteil von Text, sonst wird die Seite zur float-page
+\renewcommand{\textfraction}{0.1}       % Standard: 0.2
+
+% Maximalanteil, den floats am Seitenanfang einer Seite einnehmen dürfen.
+\renewcommand{\topfraction}{0.9}        % Standard: 0.7
+
+% Maximalanteil, den floats am Seitenende einer Seite einnehmen dürfen.
+\renewcommand{\bottomfraction}{0.7}     % Standard: 0.3
+
+
+% >> Float Platzierung
+% Funktion: Default-Platzierungen von Gleitobjekten ändern.
+% Hinweise: Standard war "tbp" (top,bottom,page).
+%           Geändert zu "htbp" (here,top,bottom,page)
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: DE-TeX-FAQ, Abschnitt 6.1.2, http://www.dante.de/faq/de-tex-faq/
+\makeatletter
+\renewcommand{\fps@figure}{htbp}%
+\renewcommand{\fps@table}{htbp}%
+\makeatother
+
+
+% >> floats auf reinen float pages ausrichten
+% Funktion: Vertikale Ausrichtung von floats auf float pages
+% Hinweise: Deaktiviert, wegen falscher Platzierung bei sidewaysfigure im
+%           rotating-Paket!
+% Gebrauch: \setlength{\@fptop}{0pt} : oberer Seitenrand
+%           Standard: mittig
+% Optionen: -
+% vor/nach: -
+% Referenz: DE-TeX-FAQ, Abschnitt 6.1.18, http://www.dante.de/faq/de-tex-faq/
+% \makeatletter
+% \setlength{\@fptop}{0pt}%
+% \makeatother
+
+
+% >> float
+% Funktion: Mehr Funktionen für Floats
+% Hinweise: neue Option [H] bei figures, platziert Grafik genau an der
+%           gewählten Stelle; sollte nur in Ausnahmefällen verwendet werden
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/float/float.dvi
+\usepackage{float}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Farben und Grafiken -----------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> xcolor
+% Funktion: Farben definieren
+% Hinweise: -
+% Gebrauch: -
+% Optionen: dvips: Treiber für dvi, pdftex: Treiber für pdf
+% vor/nach: vor Farbdefinitionen von hyperref
+% Referenz: $miktex$/doc/latex/xcolor/xcolor.pdf
+%           auch: grfguide.ps
+%\usepackage[pdftex]{xcolor}
+\usepackage{xcolor}
+
+
+% >> graphicx
+% Funktion: Einbindung von Grafiken
+% Hinweise: -
+% Gebrauch: -
+% Optionen: dvips: Treiber für dvi (eps-Grafiken)
+%           pdftex: Treiber für pdf (keine eps-Grafiken, dafür jpg etc.)
+% vor/nach: -
+% Referenz: $miktex$doc/latex/graphics/graphicx.dvi
+%           $miktex$doc/latex/graphics/grfguide.pdf
+%\usepackage[dvips]{graphicx}
+%\usepackage[pdftex]{graphicx}
+\usepackage{graphicx}
+
+
+% >> epstopdf
+% Funktion: eps-Bilder automatisch zu pdf-Bilder wandeln
+% Hinweise: Werden bei Verwendung von pdflatex eps-Bilder gefunden, so werden
+%           diese automatisch umgewandelt.
+%           Achtung pdflatex muss mit "--enable-write18" (MiKTeX) oder
+%           "--shell-escape" (TeXLive) aufgerufen werden!
+% Gebrauch: -
+% Optionen: update: nur konvertieren, wenn die EPS-Datei sich verändert hat
+%           append/prepend: wenn _keine_ Endung angegeben wurde, wird hiermit
+%           die Reihenfolge der Endungen bestimmt, nach der gesucht werden soll
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/oberdiek/epstopdf.pdf
+%\usepackage{epstopdf}
+
+
+% >> rotating
+% Funktion: Drehen von Grafiken/Tabellen
+% Hinweise: -
+% Gebrauch: sideways/sidewaysfigure
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/rotating/rotating.pdf
+%           rotating_examples.pdf
+\usepackage[figuresright]{rotating}
+
+% >> pgfplots
+% Funktion: Erstellen von Plots
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: CTAN
+%\usepackage{tikz-3dplot}
+\usepackage{pgfplots}
+
+
+%------------------------------------------------------------------------------%
+%---- Bild-/Tabellenunterschriften --------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> subfig
+% Funktion: Erlaubt Unternummerierung von Bildern (1a, 1b, ...)
+% Hinweise: -
+% Gebrauch: \subfloat[caption]{figure}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/subfig/subfig.dvi
+\usepackage{subfig}
+
+% >> caption
+% Funktion: Bild-/Tabellenunterschriften formatieren
+% Hinweise: mindestens Version 2007/04/09 sonst Probleme mit hypcap
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/caption/caption-deu.pdf
+\usepackage{caption}
+
+\captionsetup{                  % globale Option für caption und subcaption
+  font=sf,		        % Schrift der Caption (Label+Text)
+  format=hang,                  % Formatierung der Caption
+  justification=RaggedRight,    % linksbündig bei mehreren caption-Zeilen
+  singlelinecheck=true,         % true: einzelne Linie zentriert!
+  labelfont=bf,			% Schrift des Labels
+  textfont=rm,                  % Schrift des Textes
+  position=bottom               % Normale Caption unter dem Float
+}
+
+% Wird mit dem KOMA-Script nicht mehr benötigt
+%\captionsetup[table]{   % caption Optionen für Tabellen (caption über Tabelle)
+%  position=top          % Vertauschen von above-/belowcaptionskip
+%}
+
+% Eigenes Labelformat definieren, vgl. caption-deu.pdf
+\DeclareCaptionLabelFormat{Klammer}{#2)}
+
+% Font settings wie sie später in der (Sub-)Caption verwendet werden:
+% {\font {\labelfont #1#2}{\textfont #3}
+% #1: <label>
+% #2: <separator>
+% #3: <text>
+\captionsetup[subfloat]{    % subcaption Optionen
+  font=small,               % Schrift der Caption (Label+Text)
+  labelfont=rm,             % Schrift des Labels
+  textfont=rm,              % Schrift des Textes
+  captionskip=10pt,         % Abstand Caption <> Subfloat
+  nearskip=0pt,             % Abstand Caption <> Folgetext (wenn Caption unten)
+  labelformat=Klammer       % Eigenes Formt, nur eine Klammer: a)
+}
+
+
+
+%------------------------------------------------------------------------------%
+%---- PDF-bezogene Pakete -----------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> Linkfarben
+% Funktion: Linkfarben zur Verwendung im hyperref-Paket
+% Hinweise: Die Digitalversion verwendet blau, grün, rot als Linkfarben
+% Gebrauch: -
+% Optionen: -
+% vor/nach: vor hyperref, nach xcolor
+% Referenz: $miktex$/doc/latex/graphics/grfguide.pdf
+\definecolor{seclinks}{rgb}{0,0,0.5}  % blau, Verweise auf Abschnitte, Floats
+\definecolor{citelinks}{rgb}{0,0.5,0} % grün, Verweise auf Quellen/Literatur
+\definecolor{urllinks}{rgb}{0,0,0}    % schwarz, Verweise auf externe URLs
+
+
+% >> hyperref
+% Funktion: interne und externe Links für PDFs
+% Hinweise: backref/pagebackref funktioniert nur bei Aufruf in usepackage
+% Gebrauch: -
+% Optionen: -
+% vor/nach: Farbdefinition der Links
+% Referenz: $miktex$/doc/latex/hyperref/manual.pdf
+%           $miktex$/doc/latex/hyperref/paper.pdf
+\usepackage{hyperref}
+
+\hypersetup{%
+  %hyperfootnotes=true,          % footnote verlinken zum footnotetext
+  plainpages=false,             % true > Erzwingt arabische (1,2,...) Zahlen
+  linktocpage=false,            % Seitenzahlen im Inhaltsverz. verlinkt
+  unicode=true,                 % Unicode-Zeichen in Bookmarks, s.u.
+  breaklinks=true               % Umbrüche in Links erlaubt
+}
+
+\ifprint % Druckversion
+  \hypersetup{%
+    colorlinks=false,            % Links werden umrandet dargestellt
+    pdfborder=0 0 0,             % Umrandung wird deaktiviert
+    pdfpagelayout=TwoColumnRight % Doppelseite, ungerade Seiten rechts
+  }
+\else % Digitalversion
+  \hypersetup{%
+    colorlinks=true,             % Links werden farblich dargestellt
+    linkcolor=seclinks,          % "normal internal links" > Farbdefinition s.o.
+    citecolor=citelinks,         % "bibliographical cites" > Farbdefinition s.o.
+    urlcolor=urllinks,           % URLs > Farbdefinition s.o.
+    pdfpagelayout=OneColumn      % eine Seite, kontinuierliches Scrollen
+  }
+\fi
+
+
+% >> url
+% Funktion: URLs definieren
+% Hinweise: Erzeugt Verlinkung und Schriftartwechsel (Typewriter)
+% Gebrauch: \url{}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/tex/latex/ltxmisc/url.sty
+\usepackage{url}
+
+
+% >> bookmark
+% Funktion: Erweiterte Bookmark Verwaltung
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/oberdiek/bookmark.pdf
+\usepackage{bookmark}
+
+\bookmarksetup{%
+  open=true,        % Bookmark-Baumstruktur ausgeklappt
+  openlevel=1,      % Anzahl der Ebenen, die ausgeklappt werden
+  numbered=true     % Nummerierung d. Bookmarks mit Nummern
+}
+
+
+% >> hypcap
+% Funktion: Sprungmarke an den Anfang von Bilder/Tabellen verschieben
+% Hinweise: Ursprünglich wird auf die caption gesprungen, so dass Bilder
+%           etc. beim Klick auf Links zunächst nicht zu sehen ist.
+%           Lösung: hypcap-package definiert die float-Umgebungen neu, so dass
+%           standardmäßig an den Anfang gesprungen wird oder dorthin wo
+%           \capstart manuell notiert wird
+%
+%           ACHTUNG: Bei Verwendung von hypcap und subfigure Probleme mit
+%           Nummerierung,
+%           hypcap v1.7 2007-04-11 mit caption v3.0l 2007-02-20 > counter-Fehler
+%           hypcap v1.7 2007-04-11 funktioniert ab caption v3.0p 2007-04-09!
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: -
+\usepackage[all]{hypcap}
+\renewcommand{\hypcapspace}{\baselineskip} % Zusätzliche Verschiebung nach oben
+
+% If there are other float environments, that should automatically execute
+% \capstart, then a redefinition with \hypcapredef can be tried
+%\hypcapredef{sidewaysfigure}
+
+
+% >> pdfpages
+% Funktion: Externe PDF-Seiten hinzufügen
+% Hinweise: -
+% Gebrauch: \includepdf[key=val]{filename}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/pdfpages/pdfpages.pdf
+\usepackage{pdfpages}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Diverse Einstellungen und Pakete ----------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> listings
+% Funktion: Quelltext-Formatierungen
+% Hinweise: benötigt für Option "upquote=true" das textcomp Paket
+% Gebrauch: -
+% Optionen: -
+% vor/nach: nach textcomp
+% Referenz: $miktex$/doc/latex/listings/listings.pdf
+\usepackage{listings}
+
+% >> mdframed
+% Funktion: Rahmen um Boxen
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/mdframed/mdframed.pdf
+%\usepackage[framemethod=TikZ]{mdframed}
+
+
+% >> ifthen
+% Funktion: if-then-else Abfragen ermöglichen
+% Hinweise: -
+% Gebrauch: \ifthenelse{}{}{}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/base/ifthen.dvi
+\usepackage{ifthen}
+
+
+% >> varwidth
+% Funktion: Boxen variabler Breite
+% Hinweise: wie minipage, jedoch passt sich die Breite automatisch
+%           der natürlichen Breite an
+% Gebrauch: \begin{varwidth}{\linewidth}...\end{varwidth}
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/faq/english/html/FAQ-varwidth.html
+\usepackage{varwidth}
+
+
+% >> xspace
+% Funktion: fügt Leerzeichen ein, wenn notwendig
+% Hinweise: -
+% Gebrauch: \xspace
+% Optionen: -
+% vor/nach: -
+% Referenz: $miktex$/doc/latex/tools/xspace.dvi
+\usepackage{xspace}
+
+
+% >> \numberwithin
+% Funktion: Nummerierung abhängig von Chapter/Section machen
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: nach amsmath, Befehl wird dort definiert
+%           nach hyperref, damit die Links korrekt funktionieren
+% Referenz: $miktex$/doc/latex/amsmath/amsldoc.dvi
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+
+
+%------------------------------------------------------------------------------%
+%---- Überprüfung von Satzspiegel und Layout ----------------------------------%
+%------------------------------------------------------------------------------%
+
+% Hinweis: alle Pakete dienen nur der Überprüfung vom Satzspiegeleinstellungnen
+% und sollten aus Performancegründen später deaktiviert werden!
+
+% >> layout
+% Funktion: Grafische Ausgabe des Satzspiegel (skaliert)
+% Hinweise: -
+% Gebrauch: \layout im Text platzieren
+% Optionen: -
+% vor/nach: nach der Satzspiegelberechnung
+% Referenz: $miktex$/doc/latex/tools/layout.dvi
+%\usepackage{layout}
+
+
+% >> layouts
+% Funktion: Anzeige des Satzspiegel und Parametern
+% Hinweise: -
+% Gebrauch: \printinunitsof{mm} (auf Millimeter-Angaben umschalten)
+%           \pagevalues (Zahlenwerte der Längen)
+%           \pagediagram (Diagramm des Layouts)
+% Optionen: -
+% vor/nach: nach der Satzspiegelberechnung
+% Referenz: $miktex$/doc/latex/layouts/layman.pdf
+%\usepackage{layouts}
+%\printinunitsof{mm}
+
+
+% >> showframe
+% Funktion: Zeichnet Rahmen für Textkörper u. Randtext in den Seitenhintergrund
+% Hinweise: Using the package option "noframe" you can draw the frames later only 
+%           for a single page with \AddToShipoutPicture*{\ShowFramePicture}. Other 
+%           useful options maybe eso-pic's "colorgrid" or "grid".
+% Gebrauch: -
+% Optionen: colorgrid: farbige Gitterlinien
+%           texcoord: linke obere Ecke > Nullpunkt
+%           gridunit: Einheit für das Gitter wählen
+% vor/nach: nach der Satzspiegelberechnung
+% Referenz: $miktex$/doc/latex/eso-pic/eso-pic.dvi
+%\usepackage[colorgrid,texcoord,gridunit=mm]{showframe}
+%\usepackage[noframe]{showframe}
+%\usepackage{showframe}
+
+
+% >> blindtext
+% Funktion: Erzeugt Blindtext, nur für Testzwecke
+% Hinweise: sprachenabhängig nach babel-Einstellung
+% Gebrauch: \blindtext oder \blindtext[Anzahl]
+% Optionen: -
+% vor/nach: babel Paket
+% Referenz: $miktex$\doc\latex\blindtext\blindtext.pdf
+\usepackage{blindtext}
+
+%------------------------------------------------------------------------------%
+%---- Literaturverwaltung -----------------------------------------------------%
+%------------------------------------------------------------------------------%
+
+% >> csquotes
+% Funktion: -
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: babel Paket
+% Referenz: -
+\usepackage[babel,german=quotes]{csquotes}
+
+% >> biblatex
+% Funktion: -
+% Hinweise: -
+% Gebrauch: -
+% Optionen: -
+% vor/nach: babel Paket
+% Referenz: -
+\usepackage[
+		backend=biber,
+		style=authoryear,
+%		bibstyle=authoryear,
+		citestyle=authoryear
+%		natbib=
+%		mcite=,
+		]{biblatex}
+		
+%------------------------------------------------------------------------------%
+%---- Weitere Einstellungen und Pakete ----------------------------------------%
+%------------------------------------------------------------------------------%	
+% >> ifdraft
+% Funktion: Überprüft ob draft modus an ist
+% Hinweise: -
+% Gebrauch: \ifdraft{<draft case>}{<other case>}
+% Optionen: -
+% vor/nach: -
+% Referenz: -
+\usepackage{ifdraft}
+
+% >> todonotes
+% Funktion: Ermöglicht
+% Hinweise: -
+% Gebrauch: \todo{...}, \missingfigure{...}, \listoftodos
+% Optionen: -
+% vor/nach: -
+% Referenz: -
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
