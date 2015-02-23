@@ -59,6 +59,9 @@
 *.eledsec[1-9][0-9][0-9]
 *.eledsec[1-9][0-9][0-9]R
 
+# gnuplot
+*.gnuplot
+
 # glossaries
 *.acn
 *.acr
@@ -92,6 +95,9 @@
 # nomencl
 *.nlo
 
+# pgfplots
+*.table
+
 # sagetex
 *.sagetex.sage
 *.sagetex.py
@@ -107,3 +113,24 @@ sympy-plots-for-*.tex/
 
 # xindy
 *.xdy
+
+## Auxiliary MATLAB files
+*.m~
+*.asv
+*.mex*
+*.DS_Store
+*.mat
+
+## Octave workspace error
+octave-workspace
+
+
+## Archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
